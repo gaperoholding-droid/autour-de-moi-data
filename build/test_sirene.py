@@ -93,7 +93,11 @@ def _nk(s):
     return " ".join(s.split())
 
 _STOP = set("sarl sas sasu eurl sa snc sci scm selarl selas sel dr docteur cabinet pharmacie boulangerie "
-            "patisserie restaurant garage coiffure institut le la les du de des et au aux chez".split())
+            "patisserie restaurant garage coiffure institut salon bar cafe tabac presse ecole auto "
+            "saint sainte galmier loire france centre service services magasin maison societe entreprise "
+            "batiment agence groupe credit agricole caisse epargne mutuel banque assurance assurances "
+            "immobilier immo poste bureau brasserie boucherie supermarche superette epicerie fleuriste "
+            "le la les un une du de des et au aux chez sur pour par avec".split())
 def _toks(s):
     return set(w for w in _nk(s).split() if len(w) >= 4 and w not in _STOP)
 
@@ -114,13 +118,19 @@ def enrichir(groupes, pois):
                 continue
             fla, flo = float(f["lat"]), float(f["lon"])
             nkf = _nk(f["nom"]); tkf = _toks(f["nom"])
-            best = None; bestd = 250.0
+            best = None; bestd = 1e9
             for p in pois:
                 d = _dist(fla, flo, p["lat"], p["lon"])
-                if d > 250:
+                if d > 200:
                     continue
-                nkp = _nk(p["nom"])
-                ok = (nkp == nkf) or (len(nkp) >= 5 and (nkp in nkf or nkf in nkp)) or len(tkf & _toks(p["nom"])) >= 1
+                nkp = _nk(p["nom"]); tkp = _toks(p["nom"]); shared = tkf & tkp
+                ok = False
+                if nkp == nkf and d < 200:                                   # noms identiques
+                    ok = True
+                elif len(shared) >= 2 and d < 150:                           # ≥2 mots distinctifs communs
+                    ok = True
+                elif len(shared) == 1 and len(next(iter(shared))) >= 6 and d < 80:  # 1 mot long et très proche
+                    ok = True
                 if ok and d < bestd:
                     best = p; bestd = d
             if best and (best["tel"] or best["web"] or best["horaires"]):
