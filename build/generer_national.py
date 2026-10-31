@@ -58,6 +58,13 @@ def trouver_mois():
             except Exception as e:
                 if log < 12:
                     print("  probe %s/%s -> %s" % (mo, s, str(e)[:70]), flush=True); log += 1
+    # diagnostic : lister la structure réelle
+    for u in [BASE + "/", BASE + "/2025-07/", BASE + "/2025-07/communes/"]:
+        print("\n### LISTE %s" % u, flush=True)
+        try:
+            print(http(u, timeout=30).decode("utf-8", "replace")[:1500], flush=True)
+        except Exception as e:
+            print("  erreur: %s" % str(e)[:80], flush=True)
     sys.exit("Impossible de trouver un millésime geo-sirene disponible.")
 
 # --- colonnes possibles (on prend la 1re présente) ---
