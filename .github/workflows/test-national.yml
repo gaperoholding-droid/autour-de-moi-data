@@ -24,18 +24,19 @@ jobs:
           DEP: ${{ github.event.inputs.dep }}
         run: |
           mkdir -p build
-          set -o pipefail
-          python build/generer_national.py 2>&1 | tee build/_national_log.txt || echo "EXIT=$?" >> build/_national_log.txt
-      - name: Récupérer des témoins + bilan
+          python build/generer_national.py > build/_national_log.txt 2>&1 || echo "EXIT NON ZERO" >> build/_national_log.txt
+      - name: Publier log + témoins
         if: always()
         run: |
           mkdir -p build
-          cp public/build.json build/_national_build.json || true
-          cp public/c/42222.json build/_national_42222.json || true   # Saint-Galmier
-          cp public/c/42218.json build/_national_42218.json || true   # Montbrison / échantillon
-          cp public/c/42207.json build/_national_42207.json || true   # Saint-Étienne
+          [ -f public/build.json ] && cp public/build.json build/_national_build.json || true
+          [ -f public/c/42222.json ] && cp public/c/42222.json build/_national_42222.json || true
+          [ -f public/c/42207.json ] && cp public/c/42207.json build/_national_42207.json || true
           git config user.name "github-actions"
           git config user.email "actions@github.com"
-          git add build/_national_*.json build/_national_log.txt || true
-          git commit -m "Résultat test national (dep ${{ github.event.inputs.dep }})" || echo "rien à committer"
+          git add build/_national_log.txt
+          [ -f build/_national_build.json ] && git add build/_national_build.json || true
+          [ -f build/_national_42222.json ] && git add build/_national_42222.json || true
+          [ -f build/_national_42207.json ] && git add build/_national_42207.json || true
+          git commit -m "Test national dep ${{ github.event.inputs.dep }}" || echo "rien à committer"
           git push || echo "push impossible"
