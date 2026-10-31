@@ -1,13 +1,13 @@
 # -*- coding: utf-8 -*-
 """
-Classement des établissements par code NAF/APE en deux familles :
+Classement des établissements par code NAF/APE en TROIS familles :
   - "commerce" : on y achète un produit (boulangerie, vêtements, pharmacie, resto…)
-  - "service"  : on y reçoit une prestation (coiffeur, banque, garage, santé…)
+  - "service"  : prestation commerciale/artisanale (coiffeur, banque, garage, pressing…)
+  - "liberal"  : profession libérale (santé et juridique : infirmier, médecin,
+                 kiné, vétérinaire, avocat, notaire, expert-comptable, architecte…)
 
-classer(code) -> (groupe, libellé)  ou  None si l'activité n'est pas un
-commerce/service de proximité (industrie, gros, administration, agriculture…).
-
-Table volontairement centrée sur la proximité. Facile à ajuster après le test.
+classer(code) -> (groupe, libellé)  ou  None si hors périmètre de proximité.
+Table facile à ajuster.
 """
 
 def _norm(code):
@@ -15,9 +15,8 @@ def _norm(code):
         return ""
     return "".join(c for c in str(code).upper() if c.isalnum())  # "47.24Z" -> "4724Z"
 
-# --- Codes précis (5 caractères, lettre comprise) : libellé soigné ---
 PRECIS = {
-    # ---------- COMMERCES : alimentaire ----------
+    # ================= COMMERCES : alimentaire =================
     "1071C": ("commerce", "Boulangerie-pâtisserie"),
     "1071D": ("commerce", "Pâtisserie"),
     "1071B": ("commerce", "Boulangerie"),
@@ -36,7 +35,7 @@ PRECIS = {
     "4725Z": ("commerce", "Caviste (boissons)"),
     "4726Z": ("commerce", "Tabac"),
     "4729Z": ("commerce", "Épicerie fine / alimentation"),
-    # ---------- COMMERCES : non alimentaire ----------
+    # ================= COMMERCES : non alimentaire =================
     "4719A": ("commerce", "Grand magasin"),
     "4719B": ("commerce", "Bazar / commerce non spécialisé"),
     "4741Z": ("commerce", "Informatique"),
@@ -70,7 +69,7 @@ PRECIS = {
     "4511Z": ("commerce", "Automobiles"),
     "4519Z": ("commerce", "Véhicules (autres)"),
     "4540Z": ("commerce", "Motos / scooters"),
-    # ---------- COMMERCES : restauration ----------
+    # ================= COMMERCES : restauration =================
     "5610A": ("commerce", "Restaurant"),
     "5610B": ("commerce", "Cafétéria"),
     "5610C": ("commerce", "Restauration rapide"),
@@ -79,7 +78,7 @@ PRECIS = {
     "5629B": ("commerce", "Traiteur"),
     "5630Z": ("commerce", "Bar / café"),
 
-    # ---------- SERVICES : beauté / soin / personnel ----------
+    # ================= SERVICES (prestation commerciale/artisanale) =================
     "9602A": ("service", "Coiffure"),
     "9602B": ("service", "Institut de beauté"),
     "9604Z": ("service", "Bien-être / spa"),
@@ -87,7 +86,6 @@ PRECIS = {
     "9601A": ("service", "Blanchisserie (industrielle)"),
     "9601B": ("service", "Pressing / laverie"),
     "9603Z": ("service", "Pompes funèbres"),
-    # ---------- SERVICES : réparation ----------
     "9511Z": ("service", "Réparation informatique"),
     "9512Z": ("service", "Réparation téléphonie"),
     "9521Z": ("service", "Réparation hi-fi / électronique"),
@@ -96,10 +94,9 @@ PRECIS = {
     "9524Z": ("service", "Réparation de meubles"),
     "9525Z": ("service", "Horloger / réparation"),
     "9529Z": ("service", "Réparations diverses"),
-    # ---------- SERVICES : auto ----------
     "4520A": ("service", "Garage (entretien auto)"),
     "4520B": ("service", "Carrosserie"),
-    # ---------- SERVICES : banque / assurance / immobilier ----------
+    "7120B": ("service", "Contrôle technique automobile"),
     "6419Z": ("service", "Banque"),
     "6492Z": ("service", "Crédit / financement"),
     "6512Z": ("service", "Assurance"),
@@ -107,55 +104,64 @@ PRECIS = {
     "6619A": ("service", "Change / services financiers"),
     "6619B": ("service", "Conseil financier"),
     "6831Z": ("service", "Agence immobilière"),
-    # ---------- SERVICES : divers de proximité ----------
     "7911Z": ("service", "Agence de voyage"),
     "8553Z": ("service", "Auto-école"),
     "5310Z": ("service", "Bureau de poste"),
     "5320Z": ("service", "Services de courrier / colis"),
     "9313Z": ("service", "Salle de sport / fitness"),
     "9311Z": ("service", "Équipement sportif"),
-    # ---------- SERVICES : santé ----------
-    "8621Z": ("service", "Médecin généraliste"),
-    "8622A": ("service", "Cardiologie"),
-    "8622B": ("service", "Radiologie"),
-    "8622C": ("service", "Médecin spécialiste"),
-    "8623Z": ("service", "Dentiste"),
-    "8690A": ("service", "Laboratoire d'analyses"),
-    "8690B": ("service", "Centre de santé"),
-    "8690C": ("service", "Ambulances"),
-    "8690D": ("service", "Kinésithérapie / orthophonie"),
-    "8690E": ("service", "Soins infirmiers"),
-    "8690F": ("service", "Santé (autres)"),
-    "7500Z": ("service", "Vétérinaire"),
+    "8690C": ("service", "Ambulances / transport sanitaire"),
+
+    # ================= SERVICES LIBÉRAUX (santé + juridique) =================
+    # -- Santé --
+    "8621Z": ("liberal", "Médecin généraliste"),
+    "8622A": ("liberal", "Cardiologue"),
+    "8622B": ("liberal", "Radiologue"),
+    "8622C": ("liberal", "Médecin spécialiste"),
+    "8623Z": ("liberal", "Chirurgien-dentiste"),
+    "8690A": ("liberal", "Laboratoire d'analyses médicales"),
+    "8690B": ("liberal", "Centre de santé"),
+    "8690D": ("liberal", "Kinésithérapeute / orthophoniste"),
+    "8690E": ("liberal", "Infirmier(ère)"),
+    "8690F": ("liberal", "Santé (autres praticiens)"),
+    "7500Z": ("liberal", "Vétérinaire"),
+    "8610Z": ("liberal", "Établissement de santé"),
+    # -- Juridique / comptable / technique libérale --
+    "6910Z": ("liberal", "Avocat / notaire / huissier"),
+    "6920Z": ("liberal", "Expert-comptable"),
+    "7111Z": ("liberal", "Architecte"),
+    "7112A": ("liberal", "Géomètre"),
+    "7112B": ("liberal", "Ingénierie / études techniques"),
 }
 
-# --- Rattrapage par division (2 chiffres) ou sous-classe (4) si code précis absent ---
-# Évite de rater un établissement dont le code exact n'est pas listé ci-dessus.
+# --- Rattrapage par sous-classe (4) puis division (2) si le code précis manque ---
+SOUS = {
+    "4520": ("service", "Garage automobile"),
+    "8621": ("liberal", "Cabinet médical"),
+    "8622": ("liberal", "Médecin spécialiste"),
+    "8623": ("liberal", "Chirurgien-dentiste"),
+    "8690": ("liberal", "Santé de proximité"),
+    "6419": ("service", "Banque"),
+    "6831": ("service", "Agence immobilière"),
+    "7911": ("service", "Agence de voyage"),
+    "6910": ("liberal", "Activité juridique"),
+    "6920": ("liberal", "Expert-comptable"),
+    "7111": ("liberal", "Architecte"),
+}
 DIVISION = {
     "47": ("commerce", "Commerce de détail"),
     "56": ("commerce", "Restauration"),
     "96": ("service", "Services à la personne"),
     "95": ("service", "Réparation"),
-    "75": ("service", "Vétérinaire"),
+    "75": ("liberal", "Vétérinaire"),
+    "86": ("liberal", "Santé"),
 }
-SOUS = {
-    "4520": ("service", "Garage automobile"),
-    "8621": ("service", "Cabinet médical"),
-    "8622": ("service", "Médecin spécialiste"),
-    "8623": ("service", "Dentiste"),
-    "8690": ("service", "Santé de proximité"),
-    "6419": ("service", "Banque"),
-    "6831": ("service", "Agence immobilière"),
-    "7911": ("service", "Agence de voyage"),
-}
-# Codes de la division 47 à NE PAS retenir (vente à distance / hors magasin)
+# Codes à NE PAS retenir (vente à distance / hors magasin)
 EXCLURE = {"4781Z", "4782Z", "4789Z", "4791A", "4791B", "4799A", "4799B"}
 
 def classer(code):
     c = _norm(code)
-    if not c:
-        return None
-    if c in EXCLURE:
+    if not c or c in EXCLURE:
         return None
     if c in PRECIS:
         return PRECIS[c]
