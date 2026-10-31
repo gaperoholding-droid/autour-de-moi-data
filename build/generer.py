@@ -1,0 +1,198 @@
+# -*- coding: utf-8 -*-
+"""
+Autour de moi — génération nocturne des annuaires de commerces.
+
+Pour chaque commune sélectionnée (grandes villes + communes forcées), on interroge
+OpenStreetMap une fois, et on écrit un petit fichier JSON prêt à l'emploi dans
+public/communes/<code INSEE>.json. Le site lit ensuite ce fichier instantanément.
+
+Aucune dépendance à installer : uniquement la bibliothèque standard de Python.
+"""
+import json, os, time, pathlib, urllib.request, urllib.parse, unicodedata, sys
+
+SEUIL_POP = int(os.environ.get("SEUIL_POP", "20000"))   # communes >= ce nb d'habitants
+PAUSE     = float(os.environ.get("PAUSE", "1.2"))        # secondes entre deux requêtes (politesse)
+OUT       = pathlib.Path("public/communes"); OUT.mkdir(parents=True, exist_ok=True)
+OVERPASS  = [
+    "https://overpass-api.de/api/interpreter",
+    "https://overpass.kumi.systems/api/interpreter",
+    "https://maps.mail.ru/osm/tools/overpass/api/interpreter",
+]
+
+# ---- Correspondance type OSM -> libellé + catégorie (identique au site) ----
+TYPES = {
+ "shop": {"bakery":("Boulangerie","alim"),"pastry":("Pâtisserie","alim"),"butcher":("Boucherie","alim"),"greengrocer":("Primeur","alim"),
+  "supermarket":("Supermarché","alim"),"convenience":("Épicerie","alim"),"cheese":("Fromagerie","alim"),"wine":("Caviste","alim"),
+  "alcohol":("Caviste","alim"),"deli":("Épicerie fine","alim"),"confectionery":("Confiserie","alim"),"chocolate":("Chocolatier","alim"),
+  "seafood":("Poissonnerie","alim"),"coffee":("Torréfacteur / café","alim"),"tea":("Thés","alim"),"organic":("Bio","alim"),
+  "farm":("Produits fermiers","alim"),"frozen_food":("Surgelés","alim"),"beverages":("Boissons","alim"),"health_food":("Diététique","alim"),
+  "food":("Alimentation","alim"),"spices":("Épices","alim"),"pasta":("Pâtes fraîches","alim"),
+  "chemist":("Droguerie","sante"),"optician":("Opticien","sante"),"hearing_aids":("Audioprothésiste","sante"),"medical_supply":("Matériel médical","sante"),
+  "hairdresser":("Coiffeur","beaute"),"beauty":("Institut de beauté","beaute"),"cosmetics":("Cosmétiques","beaute"),"perfumery":("Parfumerie","beaute"),
+  "massage":("Massage","beaute"),"tattoo":("Tatouage","beaute"),"barber":("Barbier","beaute"),
+  "clothes":("Vêtements","mode"),"shoes":("Chaussures","mode"),"jewelry":("Bijouterie","mode"),"bag":("Maroquinerie","mode"),
+  "boutique":("Boutique","mode"),"watches":("Horlogerie","mode"),"fashion_accessories":("Accessoires","mode"),"leather":("Maroquinerie","mode"),
+  "second_hand":("Dépôt-vente","mode"),"fabric":("Tissus","mode"),"tailor":("Retouches","mode"),"lingerie":("Lingerie","mode"),
+  "furniture":("Ameublement","maison"),"interior_decoration":("Décoration","maison"),"florist":("Fleuriste","maison"),"garden_centre":("Jardinerie","maison"),
+  "hardware":("Quincaillerie","maison"),"doityourself":("Bricolage","maison"),"houseware":("Arts de la table","maison"),"kitchen":("Cuisines","maison"),
+  "antiques":("Antiquités","maison"),"frame":("Encadrement","maison"),"curtain":("Rideaux","maison"),"bed":("Literie","maison"),
+  "lighting":("Luminaires","maison"),"bathroom_furnishing":("Salles de bain","maison"),"carpet":("Tapis","maison"),"appliance":("Électroménager","maison"),
+  "books":("Librairie","loisir"),"stationery":("Papeterie","loisir"),"toys":("Jouets","loisir"),"music":("Disquaire","loisir"),
+  "musical_instrument":("Instruments de musique","loisir"),"gift":("Cadeaux","loisir"),"sports":("Sport","loisir"),"bicycle":("Vélos","loisir"),
+  "games":("Jeux","loisir"),"newsagent":("Presse","loisir"),"photo":("Photographie","loisir"),"art":("Galerie d'art","loisir"),
+  "craft":("Loisirs créatifs","loisir"),"outdoor":("Plein air","loisir"),"video_games":("Jeux vidéo","loisir"),"comics":("Bandes dessinées","loisir"),
+  "dry_cleaning":("Pressing","serv"),"laundry":("Laverie","serv"),"travel_agency":("Agence de voyages","serv"),"copyshop":("Reprographie","serv"),
+  "mobile_phone":("Téléphonie","serv"),"computer":("Informatique","serv"),"electronics":("Électronique","serv"),"tobacco":("Tabac","serv"),
+  "car_repair":("Garage","serv"),"shoe_repair":("Cordonnerie","serv"),"locksmith":("Serrurier","serv"),"pet":("Animalerie","serv"),
+  "funeral_directors":("Pompes funèbres","serv"),"estate_agent":("Agence immobilière","serv"),"e_cigarette":("Cigarette électronique","serv"),
+  "car":("Automobiles","serv"),"tyres":("Pneus","serv"),"pawnbroker":("Rachat d'or","serv"),"repair":("Réparation","serv"),
+  "lottery":("Loterie","serv"),"ticket":("Billetterie","serv"),"key_cutter":("Clés","serv")},
+ "amenity": {"restaurant":("Restaurant","resto"),"cafe":("Café","resto"),"bar":("Bar","resto"),"pub":("Bar","resto"),"fast_food":("Restauration rapide","resto"),
+  "ice_cream":("Glacier","resto"),"pharmacy":("Pharmacie","sante"),"dentist":("Dentiste","sante"),"doctors":("Cabinet médical","sante"),
+  "veterinary":("Vétérinaire","sante"),"bank":("Banque","serv"),"post_office":("Bureau de poste","serv"),"marketplace":("Marché","alim")},
+ "craft": {"shoemaker":("Cordonnier","serv"),"key_cutter":("Clés","serv"),"tailor":("Retouches","mode"),"jeweller":("Bijoutier","mode"),
+  "watchmaker":("Horloger","mode"),"confectionery":("Confiseur","alim"),"caterer":("Traiteur","alim"),"photographer":("Photographe","loisir"),
+  "upholsterer":("Tapissier","maison"),"framer":("Encadreur","maison")},
+ "office": {"estate_agent":("Agence immobilière","serv"),"insurance":("Assurance","serv"),"travel_agent":("Agence de voyages","serv")},
+ "leisure": {"fitness_centre":("Salle de sport","loisir")},
+}
+
+def classer(t):
+    for k in ("shop","amenity","craft","office","leisure"):
+        v = t.get(k)
+        if v and v in TYPES[k]:
+            return TYPES[k][v]
+    if t.get("shop") and t["shop"] not in ("vacant","no"):
+        return ("Commerce","autre")
+    return None
+
+def norm(s):
+    s = (s or "").lower()
+    s = "".join(c for c in unicodedata.normalize("NFD", s) if unicodedata.category(c) != "Mn")
+    return s
+
+def http(url, data=None, timeout=240):
+    req = urllib.request.Request(url, data=data, headers={"User-Agent": "autour-de-moi-data/1.0 (contact@commercesautourdemoi.fr)"})
+    with urllib.request.urlopen(req, timeout=timeout) as r:
+        return json.loads(r.read().decode("utf-8"))
+
+REQUETE = ('[out:json][timeout:240];'
+ 'rel["ref:INSEE"="{code}"]["boundary"="administrative"]["admin_level"~"^(8|9)$"]->.r;'
+ '.r out center tags;.r map_to_area->.a;('
+ 'nwr["shop"]["name"](area.a);'
+ 'nwr["amenity"~"^(restaurant|cafe|bar|pub|fast_food|ice_cream|pharmacy|bank|post_office|dentist|doctors|veterinary|marketplace)$"]["name"](area.a);'
+ 'nwr["craft"]["name"](area.a);'
+ 'nwr["office"~"^(estate_agent|insurance|travel_agent)$"]["name"](area.a);'
+ 'nwr["leisure"="fitness_centre"]["name"](area.a);'
+ ');out center tags;')
+
+def overpass(code):
+    body = urllib.parse.urlencode({"data": REQUETE.format(code=code)}).encode()
+    last = None
+    for ep in OVERPASS:
+        for essai in range(2):
+            try:
+                return http(ep, data=body)
+            except Exception as e:
+                last = e; time.sleep(3)
+    raise last
+
+def transformer(j):
+    info = None; vus = set(); out = []
+    for e in j.get("elements", []):
+        t = e.get("tags", {})
+        if e["type"] == "relation" and t.get("boundary") == "administrative" and info is None:
+            c = e.get("center", {})
+            info = {"nom": t.get("name"), "lat": c.get("lat"), "lon": c.get("lon"),
+                    "cp": t.get("addr:postcode") or t.get("postal_code") or ""}
+            continue
+        lat = e.get("lat", (e.get("center") or {}).get("lat"))
+        lon = e.get("lon", (e.get("center") or {}).get("lon"))
+        if lat is None or not t.get("name"):
+            continue
+        k = classer(t)
+        if not k:
+            continue
+        cle = norm(t["name"]) + "|" + format(lat, ".4f") + "|" + format(lon, ".4f")
+        if cle in vus:
+            continue
+        vus.add(cle)
+        rue = ((t.get("addr:housenumber", "") + " ") if t.get("addr:housenumber") else "") + (t.get("addr:street") or t.get("addr:place") or "")
+        out.append({"i": e["type"][0] + str(e["id"]), "n": t["name"], "l": k[0], "c": k[1],
+                    "y": round(float(lat), 6), "x": round(float(lon), 6), "r": rue.strip(),
+                    "p": t.get("addr:postcode", ""), "v": t.get("addr:city", ""),
+                    "t": t.get("phone") or t.get("contact:phone") or "",
+                    "w": t.get("website") or t.get("contact:website") or "",
+                    "h": t.get("opening_hours") or ""})
+    out.sort(key=lambda a: a["n"].lower())
+    return {"info": info, "d": out}
+
+def arrondissements():
+    codes = []
+    for base, n in ((75101, 20), (69381, 9), (13201, 16)):
+        codes += [str(base + i) for i in range(n)]
+    return codes
+
+def main():
+    print("Liste des communes…", flush=True)
+    communes = http("https://geo.api.gouv.fr/communes?fields=code,nom,population,codesPostaux,centre&format=json", timeout=120)
+    forcees = set()
+    f = pathlib.Path("communes_forcees.txt")
+    if f.exists():
+        for ligne in f.read_text(encoding="utf-8").splitlines():
+            code = ligne.split("#")[0].strip()
+            if code:
+                forcees.add(code)
+    # sélection : grandes communes + arrondissements + communes forcées
+    cibles = {}
+    pop = {c["code"]: (c.get("population") or 0) for c in communes}
+    for c in communes:
+        if (c.get("population") or 0) >= SEUIL_POP:
+            cibles[c["code"]] = c
+    for code in arrondissements():
+        cibles.setdefault(code, None)
+    for code in forcees:
+        cibles.setdefault(code, next((c for c in communes if c["code"] == code), None))
+
+    liste = sorted(cibles.keys())
+    print("Communes à générer : %d (seuil %d hab.)" % (len(liste), SEUIL_POP), flush=True)
+    ok = 0; vides = 0; echecs = []
+    for idx, code in enumerate(liste, 1):
+        meta = cibles[code]
+        try:
+            res = transformer(overpass(code))
+            if meta:  # compléter l'info avec les données officielles si dispo
+                res["info"] = res.get("info") or {}
+                res["info"]["nom"] = res["info"].get("nom") or meta.get("nom")
+                if not res["info"].get("cp"):
+                    res["info"]["cp"] = (meta.get("codesPostaux") or [""])[0]
+                ctr = meta.get("centre") or {}
+                if res["info"].get("lat") is None and ctr.get("coordinates"):
+                    res["info"]["lat"] = ctr["coordinates"][1]; res["info"]["lon"] = ctr["coordinates"][0]
+            res["t"] = int(time.time() * 1000)
+            (OUT / (code + ".json")).write_text(json.dumps(res, ensure_ascii=False, separators=(",", ":")), encoding="utf-8")
+            ok += 1
+            if not res["d"]:
+                vides += 1
+            print("  [%d/%d] %s : %d commerces" % (idx, len(liste), code, len(res["d"])), flush=True)
+        except Exception as e:
+            echecs.append(code)
+            print("  [%d/%d] %s : ÉCHEC (%s)" % (idx, len(liste), code, e), flush=True)
+        time.sleep(PAUSE)
+
+    build = {"genere_le": time.strftime("%Y-%m-%dT%H:%M:%SZ", time.gmtime()),
+             "seuil_population": SEUIL_POP, "communes_ok": ok, "communes_vides": vides,
+             "echecs": echecs, "total": len(liste)}
+    pathlib.Path("public/build.json").write_text(json.dumps(build, ensure_ascii=False, indent=2), encoding="utf-8")
+    pathlib.Path("public/index.html").write_text(
+        "<!doctype html><meta charset=utf-8><title>Autour de moi — données</title>"
+        "<h1>Autour de moi — annuaires pré-générés</h1>"
+        "<p>%d communes générées le %s. Les fichiers sont dans /communes/&lt;code INSEE&gt;.json</p>" % (ok, build["genere_le"]),
+        encoding="utf-8")
+    print("Terminé : %d ok, %d échecs." % (ok, len(echecs)), flush=True)
+    # ne pas faire échouer le déploiement si quelques communes ont raté
+    if ok == 0:
+        sys.exit("Aucune commune générée.")
+
+if __name__ == "__main__":
+    main()

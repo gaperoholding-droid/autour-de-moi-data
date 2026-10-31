@@ -1,0 +1,4 @@
+# Communes à toujours générer, en plus des villes de plus de 10 000 habitants.
+# Mettez ici vos communes clientes et vos prospects, même petits (une par ligne, le code INSEE).
+42222   # Saint-Galmier
+69244   # Tassin-la-Demi-Lune
