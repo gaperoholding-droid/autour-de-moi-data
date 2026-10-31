@@ -55,15 +55,23 @@ def telecharger(url, dest):
             f.write(c)
     print("    -> %.0f Mo en %.0fs" % (os.path.getsize(dest) / 1e6, time.time() - t), flush=True)
 
+def cv(v):
+    """Nettoie une valeur SIRENE : '[ND]' (non-diffusible) -> vide."""
+    if not v: return ""
+    v = v.strip()
+    return "" if v.upper() in ("[ND]", "[N.D.]", "ND") else v
+
 def nom_etab(ens, usuel, denom, nom, prenom):
     for v in (ens, usuel, denom):
-        if v and v.strip(): return v.strip().title()
-    np = ((prenom or "") + " " + (nom or "")).strip()
+        v = cv(v)
+        if v: return v.title()
+    np = (cv(prenom) + " " + cv(nom)).strip()
     return np.title() if np else "Établissement"
 
 def adresse(num, typ, lib, cp, ville):
-    rue = " ".join(x for x in (num, typ, lib) if x)
-    return (rue + (", " if rue else "") + ((cp + " ") if cp else "") + (ville or "")).strip(" ,").title()
+    rue = " ".join(x for x in (cv(num), cv(typ), cv(lib)) if x)
+    cp = cv(cp); ville = cv(ville)
+    return (rue + (", " if rue else "") + ((cp + " ") if cp else "") + ville).strip(" ,").title()
 
 def flush_commune(code, ville, rows):
     groupes = {"commerce": [], "service": [], "liberal": []}; vus = set()
@@ -112,7 +120,9 @@ def main():
       FROM read_parquet('/tmp/etab.parquet') e
       LEFT JOIN read_parquet('/tmp/ul.parquet') u ON e.siren = u.siren
       LEFT JOIN read_parquet('/tmp/geo.parquet') g ON e.siret = g.siret
-      WHERE e.etatAdministratifEtablissement = 'A' %s AND (%s)
+      WHERE e.etatAdministratifEtablissement = 'A'
+        AND e.statutDiffusionEtablissement = 'O'
+        %s AND (%s)
       ORDER BY e.codeCommuneEtablissement
     """ % (where_dep, like)
     print("Requête DuckDB (jointure 3 fichiers)…", flush=True)
