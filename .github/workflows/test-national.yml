@@ -1,0 +1,37 @@
+name: Test national (un département)
+
+on:
+  workflow_dispatch:
+    inputs:
+      dep:
+        description: "Département à tester (ex. 42), ou ALL"
+        required: true
+        default: "42"
+
+permissions:
+  contents: write
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Générer le département
+        env:
+          DEP: ${{ github.event.inputs.dep }}
+        run: python build/generer_national.py
+      - name: Récupérer des témoins + bilan
+        run: |
+          mkdir -p build
+          cp public/build.json build/_national_build.json || true
+          cp public/c/42222.json build/_national_42222.json || true   # Saint-Galmier
+          cp public/c/42218.json build/_national_42218.json || true   # Montbrison / échantillon
+          cp public/c/42207.json build/_national_42207.json || true   # Saint-Étienne
+          git config user.name "github-actions"
+          git config user.email "actions@github.com"
+          git add build/_national_*.json || true
+          git commit -m "Résultat test national (dep ${{ github.event.inputs.dep }})" || echo "rien à committer"
+          git push || echo "push impossible"
