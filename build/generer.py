@@ -1,25 +1,29 @@
 # -*- coding: utf-8 -*-
 """
-Autour de moi — génération nocturne des annuaires de commerces.
+Autour de moi — génération nocturne des annuaires de commerces (version rapide).
 
-Pour chaque commune sélectionnée (grandes villes + communes forcées), on interroge
-OpenStreetMap une fois, et on écrit un petit fichier JSON prêt à l'emploi dans
-public/communes/<code INSEE>.json. Le site lit ensuite ce fichier instantanément.
+Nouveautés par rapport à la v1 :
+- les communes sont traitées des PLUS GRANDES aux plus petites (les villes clientes d'abord),
+  pour que les plus importantes soient toujours prêtes ;
+- une commune qui bloque est abandonnée vite (pas de longs réessais) ;
+- un budget de temps : le script s'arrête proprement avant la limite de GitHub (6 h)
+  et publie ce qui est déjà prêt. Les communes non faites restent chargées en direct.
 
 Aucune dépendance à installer : uniquement la bibliothèque standard de Python.
 """
 import json, os, time, pathlib, urllib.request, urllib.parse, unicodedata, sys
 
-SEUIL_POP = int(os.environ.get("SEUIL_POP", "20000"))   # communes >= ce nb d'habitants
-PAUSE     = float(os.environ.get("PAUSE", "1.2"))        # secondes entre deux requêtes (politesse)
-OUT       = pathlib.Path("public/communes"); OUT.mkdir(parents=True, exist_ok=True)
-OVERPASS  = [
-    "https://overpass-api.de/api/interpreter",
+SEUIL_POP   = int(os.environ.get("SEUIL_POP", "10000"))     # communes >= ce nb d'habitants
+PAUSE       = float(os.environ.get("PAUSE", "0.5"))          # pause entre deux communes
+BUDGET_MIN  = int(os.environ.get("BUDGET_MIN", "300"))       # minutes max (GitHub coupe à 360)
+TIMEOUT_OVP = int(os.environ.get("TIMEOUT_OVERPASS", "90"))  # secondes max par requête
+OUT         = pathlib.Path("public/communes"); OUT.mkdir(parents=True, exist_ok=True)
+OVERPASS    = [
     "https://overpass.kumi.systems/api/interpreter",
+    "https://overpass-api.de/api/interpreter",
     "https://maps.mail.ru/osm/tools/overpass/api/interpreter",
 ]
 
-# ---- Correspondance type OSM -> libellé + catégorie (identique au site) ----
 TYPES = {
  "shop": {"bakery":("Boulangerie","alim"),"pastry":("Pâtisserie","alim"),"butcher":("Boucherie","alim"),"greengrocer":("Primeur","alim"),
   "supermarket":("Supermarché","alim"),"convenience":("Épicerie","alim"),"cheese":("Fromagerie","alim"),"wine":("Caviste","alim"),
@@ -71,30 +75,30 @@ def norm(s):
     s = "".join(c for c in unicodedata.normalize("NFD", s) if unicodedata.category(c) != "Mn")
     return s
 
-def http(url, data=None, timeout=240):
-    req = urllib.request.Request(url, data=data, headers={"User-Agent": "autour-de-moi-data/1.0 (contact@commercesautourdemoi.fr)"})
+def http(url, data=None, timeout=120):
+    req = urllib.request.Request(url, data=data, headers={"User-Agent": "autour-de-moi-data/2.0 (contact@commercesautourdemoi.fr)"})
     with urllib.request.urlopen(req, timeout=timeout) as r:
         return json.loads(r.read().decode("utf-8"))
 
-REQUETE = ('[out:json][timeout:240];'
- 'rel["ref:INSEE"="{code}"]["boundary"="administrative"]["admin_level"~"^(8|9)$"]->.r;'
- '.r out center tags;.r map_to_area->.a;('
- 'nwr["shop"]["name"](area.a);'
- 'nwr["amenity"~"^(restaurant|cafe|bar|pub|fast_food|ice_cream|pharmacy|bank|post_office|dentist|doctors|veterinary|marketplace)$"]["name"](area.a);'
- 'nwr["craft"]["name"](area.a);'
- 'nwr["office"~"^(estate_agent|insurance|travel_agent)$"]["name"](area.a);'
- 'nwr["leisure"="fitness_centre"]["name"](area.a);'
- ');out center tags;')
+def requete(code):
+    return ('[out:json][timeout:%d];'
+     'rel["ref:INSEE"="%s"]["boundary"="administrative"]["admin_level"~"^(8|9)$"]->.r;'
+     '.r out center tags;.r map_to_area->.a;('
+     'nwr["shop"]["name"](area.a);'
+     'nwr["amenity"~"^(restaurant|cafe|bar|pub|fast_food|ice_cream|pharmacy|bank|post_office|dentist|doctors|veterinary|marketplace)$"]["name"](area.a);'
+     'nwr["craft"]["name"](area.a);'
+     'nwr["office"~"^(estate_agent|insurance|travel_agent)$"]["name"](area.a);'
+     'nwr["leisure"="fitness_centre"]["name"](area.a);'
+     ');out center tags;') % (TIMEOUT_OVP, code)
 
 def overpass(code):
-    body = urllib.parse.urlencode({"data": REQUETE.format(code=code)}).encode()
+    body = urllib.parse.urlencode({"data": requete(code)}).encode()
     last = None
-    for ep in OVERPASS:
-        for essai in range(2):
-            try:
-                return http(ep, data=body)
-            except Exception as e:
-                last = e; time.sleep(3)
+    for ep in OVERPASS:                       # un seul essai par serveur, puis on abandonne
+        try:
+            return http(ep, data=body, timeout=TIMEOUT_OVP + 15)
+        except Exception as e:
+            last = e
     raise last
 
 def transformer(j):
@@ -134,8 +138,10 @@ def arrondissements():
     return codes
 
 def main():
+    t0 = time.time()
     print("Liste des communes…", flush=True)
     communes = http("https://geo.api.gouv.fr/communes?fields=code,nom,population,codesPostaux,centre&format=json", timeout=120)
+    par_code = {c["code"]: c for c in communes}
     forcees = set()
     f = pathlib.Path("communes_forcees.txt")
     if f.exists():
@@ -143,25 +149,32 @@ def main():
             code = ligne.split("#")[0].strip()
             if code:
                 forcees.add(code)
-    # sélection : grandes communes + arrondissements + communes forcées
-    cibles = {}
-    pop = {c["code"]: (c.get("population") or 0) for c in communes}
+
+    # cibles avec une priorité : forcées d'abord, puis par population décroissante
+    cibles = {}  # code -> (priorite, meta)
     for c in communes:
         if (c.get("population") or 0) >= SEUIL_POP:
-            cibles[c["code"]] = c
+            cibles[c["code"]] = (c.get("population") or 0, c)
     for code in arrondissements():
-        cibles.setdefault(code, None)
+        if code not in cibles:
+            cibles[code] = (150000, par_code.get(code))   # grands arrondissements : tôt
     for code in forcees:
-        cibles.setdefault(code, next((c for c in communes if c["code"] == code), None))
+        meta = par_code.get(code)
+        cibles[code] = (10**9 + (meta.get("population") if meta and meta.get("population") else 0), meta)  # clients : en tout premier
 
-    liste = sorted(cibles.keys())
-    print("Communes à générer : %d (seuil %d hab.)" % (len(liste), SEUIL_POP), flush=True)
-    ok = 0; vides = 0; echecs = []
+    liste = sorted(cibles.keys(), key=lambda cc: cibles[cc][0], reverse=True)  # plus gros d'abord
+    print("Communes à générer : %d (seuil %d hab.) — plus grandes d'abord, budget %d min." % (len(liste), SEUIL_POP, BUDGET_MIN), flush=True)
+
+    ok = 0; vides = 0; echecs = []; arretes = 0
     for idx, code in enumerate(liste, 1):
-        meta = cibles[code]
+        if (time.time() - t0) / 60.0 > BUDGET_MIN:
+            arretes = len(liste) - idx + 1
+            print("Budget de temps atteint : arrêt propre, %d communes non traitées (elles resteront en direct)." % arretes, flush=True)
+            break
+        meta = cibles[code][1]
         try:
             res = transformer(overpass(code))
-            if meta:  # compléter l'info avec les données officielles si dispo
+            if meta:
                 res["info"] = res.get("info") or {}
                 res["info"]["nom"] = res["info"].get("nom") or meta.get("nom")
                 if not res["info"].get("cp"):
@@ -177,20 +190,20 @@ def main():
             print("  [%d/%d] %s : %d commerces" % (idx, len(liste), code, len(res["d"])), flush=True)
         except Exception as e:
             echecs.append(code)
-            print("  [%d/%d] %s : ÉCHEC (%s)" % (idx, len(liste), code, e), flush=True)
+            print("  [%d/%d] %s : échec (%s)" % (idx, len(liste), code, str(e)[:80]), flush=True)
         time.sleep(PAUSE)
 
     build = {"genere_le": time.strftime("%Y-%m-%dT%H:%M:%SZ", time.gmtime()),
              "seuil_population": SEUIL_POP, "communes_ok": ok, "communes_vides": vides,
-             "echecs": echecs, "total": len(liste)}
+             "echecs": echecs, "non_traitees_budget": arretes, "total_cible": len(liste),
+             "minutes": round((time.time() - t0) / 60.0, 1)}
     pathlib.Path("public/build.json").write_text(json.dumps(build, ensure_ascii=False, indent=2), encoding="utf-8")
     pathlib.Path("public/index.html").write_text(
         "<!doctype html><meta charset=utf-8><title>Autour de moi — données</title>"
         "<h1>Autour de moi — annuaires pré-générés</h1>"
-        "<p>%d communes générées le %s. Les fichiers sont dans /communes/&lt;code INSEE&gt;.json</p>" % (ok, build["genere_le"]),
+        "<p>%d communes générées le %s (%s min). Fichiers dans /communes/&lt;code INSEE&gt;.json</p>" % (ok, build["genere_le"], build["minutes"]),
         encoding="utf-8")
-    print("Terminé : %d ok, %d échecs." % (ok, len(echecs)), flush=True)
-    # ne pas faire échouer le déploiement si quelques communes ont raté
+    print("Terminé : %d ok, %d échecs, %d non traitées, en %s min." % (ok, len(echecs), arretes, build["minutes"]), flush=True)
     if ok == 0:
         sys.exit("Aucune commune générée.")
 
