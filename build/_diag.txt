@@ -1,71 +1,47 @@
-### Ressources dataset INSEE 61d5e2d372a52d9f9411ff88
-titre: Géolocalisation des établissements du répertoire SIRENE-pour les études statistiques
-  [zip] Sirene : Fichier géolocalisation établissements - octob 1180311775  https://static.data.gouv.fr/resources/geolocalisation-des-etablissements-du-repertoire-sirene-pour-les-etudes-statistiques/20261021-064414/geoloc-geolocalisationetablissement-sirene-pour-etudes-statistiques-csv.zip
-  [parquet] Sirene : Fichier géolocalisation établissements - octob 814389380  https://static.data.gouv.fr/resources/geolocalisation-des-etablissements-du-repertoire-sirene-pour-les-etudes-statistiques/20261021-064721/geoloc-geolocalisationetablissement-sirene-pour-etudes-statistiques-parquet.parquet
-  [pdf] documentation-geolocalisationetablissements-sirene-pour 189985  https://static.data.gouv.fr/resources/geolocalisation-des-etablissements-du-repertoire-sirene-pour-les-etudes-statistiques/20260123-143212/documentation-geolocalisationetablissements-sirene-pouretudesstatistiques-v8.pdf
+### Schéma GÉOLOC (oct 2026)
+   siret VARCHAR
+   x FLOAT
+   y FLOAT
+   qualite_xy VARCHAR
+   epsg VARCHAR
+   plg_qp24 VARCHAR
+   plg_iris VARCHAR
+   plg_zus VARCHAR
+   plg_qp15 VARCHAR
+   plg_qva VARCHAR
+   plg_code_commune VARCHAR
+   distance_precision FLOAT
+   qualite_qp24 VARCHAR
+   qualite_iris VARCHAR
+   qualite_zus VARCHAR
+   qualite_qp15 VARCHAR
+   qualite_qva VARCHAR
+   y_latitude FLOAT
+   x_longitude FLOAT
 
-### Schéma du parquet https://static.data.gouv.fr/resources/sirene-geolocalise-parquet/20240107-143656/sirene2024-geo.parquet
-  col: siren VARCHAR
-  col: nomUniteLegale VARCHAR
-  col: denominationUniteLegale VARCHAR
-  col: nic VARCHAR
-  col: siret VARCHAR
-  col: statutDiffusionEtablissement VARCHAR
-  col: dateCreationEtablissement DATE
-  col: trancheEffectifsEtablissement VARCHAR
-  col: anneeEffectifsEtablissement BIGINT
-  col: activitePrincipaleRegistreMetiersEtablissement VARCHAR
-  col: dateDernierTraitementEtablissement TIMESTAMP WITH TIME ZONE
-  col: etablissementSiege BOOLEAN
-  col: nombrePeriodesEtablissement BIGINT
-  col: complementAdresseEtablissement VARCHAR
-  col: numeroVoieEtablissement VARCHAR
-  col: indiceRepetitionEtablissement VARCHAR
-  col: typeVoieEtablissement VARCHAR
-  col: libelleVoieEtablissement VARCHAR
-  col: codePostalEtablissement VARCHAR
-  col: libelleCommuneEtablissement VARCHAR
-  col: libelleCommuneEtrangerEtablissement VARCHAR
-  col: distributionSpecialeEtablissement VARCHAR
-  col: codeCommuneEtablissement VARCHAR
-  col: codeCedexEtablissement VARCHAR
-  col: libelleCedexEtablissement VARCHAR
-  col: codePaysEtrangerEtablissement VARCHAR
-  col: libellePaysEtrangerEtablissement VARCHAR
-  col: complementAdresse2Etablissement VARCHAR
-  col: numeroVoie2Etablissement VARCHAR
-  col: indiceRepetition2Etablissement VARCHAR
-  col: typeVoie2Etablissement VARCHAR
-  col: libelleVoie2Etablissement VARCHAR
-  col: codePostal2Etablissement VARCHAR
-  col: libelleCommune2Etablissement VARCHAR
-  col: libelleCommuneEtranger2Etablissement VARCHAR
-  col: distributionSpeciale2Etablissement VARCHAR
-  col: codeCommune2Etablissement VARCHAR
-  col: codeCedex2Etablissement VARCHAR
-  col: libelleCedex2Etablissement VARCHAR
-  col: codePaysEtranger2Etablissement VARCHAR
-  col: libellePaysEtranger2Etablissement VARCHAR
-  col: dateDebut DATE
-  col: etatAdministratifEtablissement VARCHAR
-  col: enseigne1Etablissement VARCHAR
-  col: enseigne2Etablissement VARCHAR
-  col: enseigne3Etablissement VARCHAR
-  col: denominationUsuelleEtablissement VARCHAR
-  col: activitePrincipaleEtablissement VARCHAR
-  col: nomenclatureActivitePrincipaleEtablissement VARCHAR
-  col: caractereEmployeurEtablissement VARCHAR
-  col: geo_score DOUBLE
-  col: geo_type VARCHAR
-  col: geo_adresse VARCHAR
-  col: geo_id VARCHAR
-  col: geo_ligne VARCHAR
-  col: geo_l4 VARCHAR
-  col: geo_l5 VARCHAR
-  col: geometry GEOMETRY('OGC:CRS84')
-  col: quadkey VARCHAR
-
-### 1 ligne exemple
-  erreur duckdb: Invalid Input Error: Required module 'pytz' failed to import, due to the following Python exception:
-ModuleNotFoundError: No module named 'pytz'
-
+### Ressources dataset SIRENE complet (Stock Établissement / Unité légale)
+titre: Base Sirene des entreprises et de leurs établissements (SIREN, SIRET)
+  [zip] Sirene : Fichier StockUniteLegale - 01 octobre 2026          979789073  https://static.data.gouv.fr/resources/base-sirene-des-entreprises-et-de-leurs-etablissements-siren-siret/20261001-072119/stock-stockunitelegale-csv.zip
+  [parquet] Sirene : Fichier StockUniteLegale - 01 octobre 2026 (format  713585991  https://static.data.gouv.fr/resources/base-sirene-des-entreprises-et-de-leurs-etablissements-siren-siret/20261001-073325/stock-stockunitelegale-parquet.parquet
+  [zip] Sirene : Fichier StockEtablissement - 01 octobre 2026        2879694907  https://static.data.gouv.fr/resources/base-sirene-des-entreprises-et-de-leurs-etablissements-siren-siret/20261001-072713/stock-stocketablissement-csv.zip
+  [parquet] Sirene : Fichier StockEtablissement - 01 octobre 2026 (forma 2220887978  https://static.data.gouv.fr/resources/base-sirene-des-entreprises-et-de-leurs-etablissements-siren-siret/20261001-073823/stock-stocketablissement-parquet.parquet
+  [zip] Sirene : Fichier StockEtablissementHistorique - 01 octobre 2 1244801219  https://static.data.gouv.fr/resources/base-sirene-des-entreprises-et-de-leurs-etablissements-siren-siret/20261001-073027/stock-stocketablissementhistorique-csv.zip
+  [parquet] Sirene : Fichier StockEtablissementHistorique - 01 octobre 2 877620853  https://static.data.gouv.fr/resources/base-sirene-des-entreprises-et-de-leurs-etablissements-siren-siret/20261001-074108/stock-stocketablissementhistorique-parquet.parquet
+  [zip] Sirene : Fichier StockUniteLegaleHistorique - 01 octobre 202 1265427232  https://static.data.gouv.fr/resources/base-sirene-des-entreprises-et-de-leurs-etablissements-siren-siret/20261001-072342/stock-stockunitelegalehistorique-csv.zip
+  [parquet] Sirene : Fichier StockUniteLegaleHistorique - 01 octobre 202 863403921  https://static.data.gouv.fr/resources/base-sirene-des-entreprises-et-de-leurs-etablissements-siren-siret/20261001-073513/stock-stockunitelegalehistorique-parquet.parquet
+  [zip] Sirene : Fichier StockEtablissementLiensSuccession - 01 octo 120372241  https://static.data.gouv.fr/resources/base-sirene-des-entreprises-et-de-leurs-etablissements-siren-siret/20261001-073218/stock-stocketablissementlienssuccession-csv.zip
+  [parquet] Sirene : Fichier StockEtablissementLiensSuccession - 01 octo 119372997  https://static.data.gouv.fr/resources/base-sirene-des-entreprises-et-de-leurs-etablissements-siren-siret/20261001-074252/stock-stocketablissementlienssuccession-parquet.parquet
+  [zip] Sirene : Fichier StockDoublons - 01 octobre 2026             1098655  https://static.data.gouv.fr/resources/base-sirene-des-entreprises-et-de-leurs-etablissements-siren-siret/20261001-072532/stock-stockdoublons-csv.zip
+  [parquet] Sirene : Fichier StockDoublons - 01 octobre 2026 (format par 1092469  https://static.data.gouv.fr/resources/base-sirene-des-entreprises-et-de-leurs-etablissements-siren-siret/20261001-073650/stock-stockdoublons-parquet.parquet
+  [pdf] Description-fichier-stockdoublons-311.pdf                    110995  https://static.data.gouv.fr/resources/base-sirene-des-entreprises-et-de-leurs-etablissements-siren-siret/20260129-104735/stockdoublons-311-description-fichier-29-01-2026.pdf
+  [csv] Liste-csv-des-variables-du-dessin-du-fichier-stockdoublons-3 220  https://static.data.gouv.fr/resources/base-sirene-des-entreprises-et-de-leurs-etablissements-siren-siret/20240606-111058/stockdoublons-311-dessin-de-fichier.csv
+  [pdf] description-fichier-stocketablissementhistorique-311.pdf     118082  https://static.data.gouv.fr/resources/base-sirene-des-entreprises-et-de-leurs-etablissements-siren-siret/20260129-104815/stocketablissementhistorique-311-description-fichier-29-01-2026.pdf
+  [pdf] description-fichier-stockunitelegalehistorique-311.pdf       120786  https://static.data.gouv.fr/resources/base-sirene-des-entreprises-et-de-leurs-etablissements-siren-siret/20260129-104828/stockunitelegalehistorique-311-description-fichier-29-01-2026.pdf
+  [pdf] description-fichier-stocketablissement-311.pdf               127863  https://static.data.gouv.fr/resources/base-sirene-des-entreprises-et-de-leurs-etablissements-siren-siret/20260129-104840/stocketablissement-311-description-fichier-29-01-2026.pdf
+  [pdf] description-fichier-stockunitelegale-311.pdf                 122938  https://static.data.gouv.fr/resources/base-sirene-des-entreprises-et-de-leurs-etablissements-siren-siret/20260129-104927/stockunitelegale-311-description-fichier-29-01-2026.pdf
+  [pdf] description-fichier-stocketablissementlienssuccession-311.pd 128372  https://static.data.gouv.fr/resources/base-sirene-des-entreprises-et-de-leurs-etablissements-siren-siret/20260129-104940/stocketablissementlienssuccession-311-description-fichier-29-01-2026.pdf
+  [csv] liste-csv-des-variables-du-dessin-du-fichier-stockunitelegal 3165  https://static.data.gouv.fr/resources/base-sirene-des-entreprises-et-de-leurs-etablissements-siren-siret/20260113-143438/stockunitelegale-311-dessin-de-fichier.csv
+  [csv] liste-csv-des-variables-du-dessin-du-fichier-stockunitelegal 2903  https://static.data.gouv.fr/resources/base-sirene-des-entreprises-et-de-leurs-etablissements-siren-siret/20240912-155042/stockunitelegalehistorique-311-dessin-de-fichier.csv
+  [csv] liste-csv-des-variables-du-dessin-du-fichier-stocketablissem 4875  https://static.data.gouv.fr/resources/base-sirene-des-entreprises-et-de-leurs-etablissements-siren-siret/20260113-143513/stocketablissement-311-dessin-de-fichier.csv
+  [csv] liste-csv-des-variables-du-dessin-du-fichier-stocketablissem 1740  https://static.data.gouv.fr/resources/base-sirene-des-entreprises-et-de-leurs-etablissements-siren-siret/20240326-122426/liste-csv-des-variables-du-dessin-du-fichier-stocketablissementhistorique-311.csv
+  [csv] liste-csv-des-variables-du-dessin-du-fichier-stocketablissem 528  https://static.data.gouv.fr/resources/base-sirene-des-entreprises-et-de-leurs-etablissements-siren-siret/20240326-122516/liste-csv-des-variables-du-dessin-du-fichier-stocketablissementlienssuccession-311.csv
