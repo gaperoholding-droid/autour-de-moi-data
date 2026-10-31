@@ -111,6 +111,26 @@ PRECIS = {
     "9313Z": ("service", "Salle de sport / fitness"),
     "9311Z": ("service", "Équipement sportif"),
     "8690C": ("service", "Ambulances / transport sanitaire"),
+    # -- Artisans du bâtiment / travaux --
+    "4321A": ("service", "Électricien"),
+    "4321B": ("service", "Installation électrique (autres)"),
+    "4322A": ("service", "Plombier-chauffagiste"),
+    "4322B": ("service", "Installation eau / gaz / climatisation"),
+    "4329A": ("service", "Isolation"),
+    "4329B": ("service", "Autres travaux d'installation"),
+    "4331Z": ("service", "Plâtrier"),
+    "4332A": ("service", "Menuisier (bois / PVC)"),
+    "4332B": ("service", "Menuiserie métallique / serrurerie"),
+    "4332C": ("service", "Agencement de magasins"),
+    "4333Z": ("service", "Carreleur / revêtements"),
+    "4334Z": ("service", "Peintre / vitrier"),
+    "4339Z": ("service", "Travaux de finition"),
+    "4391A": ("service", "Charpentier"),
+    "4391B": ("service", "Couvreur"),
+    "4399A": ("service", "Étanchéité"),
+    "4399C": ("service", "Maçon"),
+    "4399D": ("service", "Travaux spécialisés (autres)"),
+    "8130Z": ("service", "Paysagiste / entretien de jardins"),
 
     # ================= SERVICES LIBÉRAUX (santé + juridique) =================
     # -- Santé --
@@ -131,7 +151,7 @@ PRECIS = {
     "6920Z": ("liberal", "Expert-comptable"),
     "7111Z": ("liberal", "Architecte"),
     "7112A": ("liberal", "Géomètre"),
-    "7112B": ("liberal", "Ingénierie / études techniques"),
+    # 71.12B (bureaux d'études / ingénierie B2B) volontairement exclu.
 }
 
 # --- Rattrapage par sous-classe (4) puis division (2) si le code précis manque ---
@@ -153,6 +173,7 @@ DIVISION = {
     "56": ("commerce", "Restauration"),
     "96": ("service", "Services à la personne"),
     "95": ("service", "Réparation"),
+    "43": ("service", "Artisan du bâtiment"),
     "75": ("liberal", "Vétérinaire"),
     "86": ("liberal", "Santé"),
 }
