@@ -11,20 +11,16 @@
   probe 2026-08/42218 -> HTTP Error 404: Not Found
   probe 2026-08/42222 -> HTTP Error 404: Not Found
 
-### LISTE https://files.data.gouv.fr/geo-sirene/
-<html>
-<head><title>Index of /geo-sirene/</title></head>
-<body>
-<h1>Index of /geo-sirene/</h1><hr><pre><a href="../">../</a>
-<a href="decommissionnement.txt">decommissionnement.txt</a>                             15-Apr-2026 12:42                 218
-</pre><hr></body>
-</html>
+### decommissionnement.txt
+Les traitements a l'origine de ces donnees ont ete decommissionnes en avril 2026, nous vous invitons a utiliser la base SIRENE geocodee produite par l'INSEE : https://www.data.gouv.fr/datasets/61d5e2d372a52d9f9411ff88
 
 
-### LISTE https://files.data.gouv.fr/geo-sirene/2025-07/
-  erreur: HTTP Error 404: Not Found
+### data.gouv dataset base-sirene-des-etablissements-2024-geolocalisee-geoparquet
+titre: Base SIRENE des établissements 2024 géolocalisée - geoparquet
+  - [parquet] sirene2024-geo.parquet  (972726667)  https://static.data.gouv.fr/resources/sirene-geolocalise-parquet/20240107-143656/sirene2024-geo.parquet
 
-### LISTE https://files.data.gouv.fr/geo-sirene/2025-07/communes/
-  erreur: HTTP Error 404: Not Found
-Impossible de trouver un millésime geo-sirene disponible.
+### data.gouv dataset base-sirene-des-etablissements-siret-geolocalisee-avec-la-base-dadresse-nationale-ban
+titre: Base SIRENE des établissements (SIRET) - géolocalisée avec la Base d'Adresse Nationale (BAN)
+  - [url] Utiliser le fichier géolocalisé de l'INSEE  (?)  https://www.data.gouv.fr/datasets/geolocalisation-des-etablissements-du-repertoire-sirene-pour-les-etudes-statistiques
+geo-sirene décommissionnée — voir sources ci-dessus.
 EXIT NON ZERO
