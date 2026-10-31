@@ -1,15 +1,9 @@
-Téléchargement du parquet : https://static.data.gouv.fr/resources/geolocalisation-des-etablissements-du-repertoire-sirene-pour-les-etudes-statistiques/20261021-064721/geoloc-geolocalisationetablissement-sirene-pour-etudes-statistiques-parquet.parquet
-  téléchargé en 74s (814 Mo)
-Requête DuckDB…
-Traceback (most recent call last):
-  File "/home/runner/work/autour-de-moi-data/autour-de-moi-data/build/generer_national.py", line 151, in <module>
-    main()
-  File "/home/runner/work/autour-de-moi-data/autour-de-moi-data/build/generer_national.py", line 110, in main
-    cur = con.execute(sql)
-          ^^^^^^^^^^^^^^^^
-_duckdb.BinderException: Binder Error: Referenced column "etatAdministratifEtablissement" not found in FROM clause!
-Candidate bindings: "distance_precision", "siret", "y_latitude", "epsg", "qualite_iris"
-
-LINE 10:         WHERE etatAdministratifEtablissement = 'A' AND codeCommuneEtablissement...
-                              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-EXIT NON ZERO
+Découverte des fichiers…
+  télécharge geoloc-geolocalisationetablissement-sirene-pour-etudes-statistiques-parquet.parquet
+    -> 814 Mo en 88s
+  télécharge stock-stocketablissement-parquet.parquet
+    -> 2221 Mo en 213s
+  télécharge stock-stockunitelegale-parquet.parquet
+    -> 714 Mo en 59s
+Requête DuckDB (jointure 3 fichiers)…
+Terminé : 323 communes, C=11655 S=24211 L=10332, 6.1 min.
