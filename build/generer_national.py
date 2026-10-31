@@ -40,17 +40,24 @@ def mois_candidats():
         if m == 0: y -= 1; m = 12
     return out
 
-def trouver_mois(sentinelle="42222"):
+def trouver_mois():
     if MOIS:
         return MOIS
+    sentinelles = ["18233", "75056", "42218", "42222"]
+    log = 0
     for mo in mois_candidats():
-        try:
-            req = urllib.request.Request(BASE + "/%s/communes/%s.csv" % (mo, sentinelle), headers=UA)
-            with urllib.request.urlopen(req, timeout=30) as r:
-                if r.status == 200 and r.read(200):
-                    return mo
-        except Exception:
-            continue
+        for s in sentinelles:
+            url = BASE + "/%s/communes/%s.csv" % (mo, s)
+            try:
+                req = urllib.request.Request(url, headers=UA)
+                with urllib.request.urlopen(req, timeout=25) as r:
+                    head = r.read(300)
+                    if getattr(r, "status", 200) == 200 and head:
+                        print("Millésime trouvé : %s (témoin %s)" % (mo, s), flush=True)
+                        return mo
+            except Exception as e:
+                if log < 12:
+                    print("  probe %s/%s -> %s" % (mo, s, str(e)[:70]), flush=True); log += 1
     sys.exit("Impossible de trouver un millésime geo-sirene disponible.")
 
 # --- colonnes possibles (on prend la 1re présente) ---
