@@ -1,9 +1,9 @@
-== TEST SIRENE v3 (3 familles) — commune 42222 ==
+== TEST SIRENE v4 (artisans ajoutés, libéral affiné) — commune 42222 ==
 total_results = 1507 | total_pages = 61
 
 ===== RÉSULTAT =====
-COMMERCES : 71   |   SERVICES : 93   |   SERVICES LIBÉRAUX : 117   |   total : 281
-avec coordonnées GPS : 278 / 281
+COMMERCES : 71   |   SERVICES : 146   |   SERVICES LIBÉRAUX : 105   |   total : 322
+avec coordonnées GPS : 318 / 322
 
 ----- COMMERCES (71) -----
   After Fly                          | Restaurant                     | ALLEE LAURENT PORTAFAIX 42330 SAINT-GALM
@@ -78,16 +78,23 @@ avec coordonnées GPS : 278 / 281
   Titi Fruits                        | Primeur (fruits et légumes)    | 12 MONTEE DE L'EGLISE 42330 SAINT-GALMIE
   Tlra                               | Restaurant                     | 12 AVENUE JEAN MONNET 42330 SAINT-GALMIE
 
------ SERVICES (93) -----
+----- SERVICES (146) -----
   Ac Conduite                        | Auto-école                     | 2 C RUE DE LA DAME NOIRE 42330 SAINT-GAL
   Ac Institut                        | Institut de beauté             | 5 RUE CHARLES BEAUVERIE 42330 SAINT-GALM
+  Ac Piscine                         | Étanchéité                     | LE PARVIS BATIMENT A PLACE CAMILLE PASSO
+  Addario Carrelage                  | Carreleur / revêtements        | 11 BOULEVARD DOCTEUR GABRIEL COUSIN 4233
+  Akm Construction                   | Maçon                          | 36 C AVENUE JEAN MONNET 42330 SAINT-GALM
   Ansud Assurances                   | Conseil financier              | 10 LOTISSEMENT DOMAINE DE LA BROSSE 4233
+  Anthony Jacquet                    | Plâtrier                       | 7 RUE MAURICE ANDRE 42330 SAINT-GALMIER
+  Art Deco Duv                       | Plâtrier                       | 11 RUE DES VIGNES HERMES 42330 SAINT-GAL
   Association Confort Vie            | Services personnels divers     | 10 CHEMIN DES CHENES 42330 SAINT-GALMIER
   Assurances Jacques Choquelle       | Assurance / courtage           | CENTRE D AFFAIRES 1 PASSAGE DU CLOITRE 4
   Aurore Play                        | Institut de beauté             | 2 AVENUE JEAN MONNET 42330 SAINT-GALMIER
+  Baldotech                          | Électricien                    | LA PEPINIERE SQ VIVALDI 42330 SAINT-GALM
   Barrier-Pages                      | Change / services financiers   | IMMEUBLE LE FRONTENAC AVENUE JEAN MONNET
   Bernard Lachaud                    | Conseil financier              | 9 LOTISSEMENT LA COTE ROUGE 42330 SAINT-
   Bertrand Bouchut                   | Contrôle technique automobile  | 48 ROUTE DE CHEVRIERES 42330 SAINT-GALMI
+  Bruno Kaczorek                     | Plâtrier                       | 24 B RUE JULES MASSENET 42330 SAINT-GALM
   Bruno Van Robais                   | Assurance / courtage           | BP 12 15 RUE MAURICE ANDRE 42330 SAINT-G
   Cahin Caha                         | Coiffure                       | 8 RUE MAURICE ANDRE 42330 SAINT-GALMIER
   Caisse Credit Mutuel Montrond Les  | Banque                         | 29 AVENUE JEAN MONNET 42330 SAINT-GALMIE
@@ -103,32 +110,49 @@ avec coordonnées GPS : 278 / 281
   Credit Agricole Caisse Locale St G | Banque                         | 45 ANDRE 42330 SAINT-GALMIER
   Credit Lyonnais (Lcl)              | Banque                         | 6 RUE DIDIER GUETTON 42330 SAINT-GALMIER
   Croiseau Assurances                | Assurance / courtage           | 9-11 9 AVENUE JEAN DELANDE 42330 SAINT-G
+  Ct Menuiserie 42                   | Menuisier (bois / PVC)         | 11 CHEMIN DE LA CHARPINIERE 42330 SAINT-
+  Domingos Fernandes                 | Plâtrier                       | LOTISSEMENT ELIANE 23 RUE DE LA PAIX 423
+  Dominique Danis                    | Travaux de finition            | 28 AVENUE JEAN MONNET 42330 SAINT-GALMIE
   Dotation Non Affectee              | Change / services financiers   | ROUTE DE CUZIEU 42330 SAINT-GALMIER
   Edgar Croiseau                     | Assurance / courtage           | 9-11 9 AVENUE JEAN DELANDE 42330 SAINT-G
+  Ediffer                            | Menuiserie métallique / serrur | 7 LES FLACHES 42330 SAINT-GALMIER
+  Entreprise Canel                   | Plâtrier                       | ZI LA RICHELANDE RUE RICHELANDE 42330 SA
+  Entreprise Cheminal                | Électricien                    | 38 AVENUE JEAN MONNET 42330 SAINT-GALMIE
   Epi'Tete                           | Coiffure                       | 30 RUE PAUL DOUMER 42330 SAINT-GALMIER
+  Escot Luneau Electricite Climatisa | Électricien                    | 1 ZA DES FLACHES 42330 SAINT-GALMIER
   Evad'Immo                          | Agence immobilière             | 44 CHEMIN DES CHENES 42330 SAINT-GALMIER
   F3 Lt                              | Pressing / laverie             | RICHELANDE 42330 SAINT-GALMIER
+  Fernandez Renovation               | Plâtrier                       | 215 CHEMIN DU CHARMEY 42330 SAINT-GALMIE
+  Fm Bati                            | Maçon                          | 14 LOTISSEMENT LES BALCONS DE LA COISE 4
+  Forez Fenetres 42                  | Menuisier (bois / PVC)         | 5 RUE DES FLACHES  42330 SAINT-GALMIER
   Form'Up Private                    | Bien-être / spa                | HOTEL LA CHARPINIERE LOTISSEMENT LA CHAR
   Franck Ferri                       | Conseil financier              | LES CAPUCINES 42330 SAINT-GALMIER
   Franck Martellino Immobilier       | Agence immobilière             | PLACE PEYRET- LACOMBE 42330 SAINT-GALMIE
+  Fred Paysages                      | Paysagiste / entretien de jard | 9 DOMAINE DE BONNEFONDS 42330 SAINT-GALM
   Frederic Lucht                     | Contrôle technique automobile  | 21 RUE DE FAROUJAT 42330 SAINT-GALMIER
   Gap                                | Change / services financiers   | 33 AVENUE JEAN MONNET 42330 SAINT-GALMIE
   Garage A.J.N Auto                  | Garage (entretien auto)        | 33 RUE DIDIER GUETTON 42330 SAINT-GALMIE
   Garage C. Verilhac                 | Garage (entretien auto)        | 7 CHEMIN DE CHANTEMERLE 42330 SAINT-GALM
   Garage De L'Hippodrome             | Garage (entretien auto)        | ZONE COMMERCIALE DE BESACIEUX ROUTE DE C
   Garage Pailleux                    | Garage (entretien auto)        | 48 AVENUE JEAN MONNET 42330 SAINT-GALMIE
+  Gd.Mba                             | Maçon                          | 16 B MONTEE DU VERNAY 42330 SAINT-GALMIE
+  Georges Poyet                      | Menuisier (bois / PVC)         | 2 ALLEE DES TILLEULS 42330 SAINT-GALMIER
   Gianella Immo                      | Agence immobilière             | LE FRONTENAC AVENUE JEAN MONNET 42330 SA
   Grayel                             | Garage (entretien auto)        | 15 BOULEVARD DES CRETES 42330 SAINT-GALM
   Groupama Rhone Alpes Auvergne      | Assurance                      | 26 RUE MAURICE ANDRE 42330 SAINT-GALMIER
   Groupement Emploi Et Services      | Services personnels divers     | POLE DES SERVICES DE ST GALMIER 1 PASSAG
+  Gtecservices                       | Plombier-chauffagiste          | MONTESALON CHEMIN DE LA COLLINE 42330 SA
   Guillaume Herbepin                 | Services personnels divers     | 6 T RUE BOURGCHANIN 42330 SAINT-GALMIER
   Guy Hoquet L'Immobilier            | Agence immobilière             | 3 RUE DIDIER GUETTON 42330 SAINT-GALMIER
   H 2 M                              | Contrôle technique automobile  | 14 LOTISSEMENT LE BREAT 42330 SAINT-GALM
   Herve Giroud                       | Agence immobilière             | 3 PLACE CAMILLE PASSOT 42330 SAINT-GALMI
   Holly Et Rocky                     | Services personnels divers     | 3 AVENUE JEAN DELANDE 42330 SAINT-GALMIE
+  Hp Platrerie Peinture              | Plâtrier                       | LES BALCONS DU FOREZ 6 ROUTE DE CHEVRIER
+  Huseyin Ay                         | Plâtrier                       | 10 MONTEE DE L'EGLISE 42330 SAINT-GALMIE
   Irina Coiffure                     | Coiffure                       | LE FRONTENAC 2 C AVENUE JEAN MONNET 4233
   Isabelle Giraud (Mallem)           | Agence immobilière             | 3 RUE HECTOR BERLIOZ 42330 SAINT-GALMIER
   Isabelle Poncet (Bastide)          | Coiffure                       | 30 RUE MAURICE ANDRE 42330 SAINT-GALMIER
+  Ja Services                        | Paysagiste / entretien de jard | 487 ROUTE DE LA VIALLARY 42330 SAINT-GAL
   Jacques Breysse                    | Agence immobilière             | 3 BOULEVARD BELLEVUE 42330 SAINT-GALMIER
   Jane Beaute                        | Institut de beauté             | 8 PLACE ARISTIDE BRIAND 42330 SAINT-GALM
   Jerome Faveyrial                   | Coiffure                       | 33 RUE DIDIER GUETTON 42330 SAINT-GALMIE
@@ -137,9 +161,14 @@ avec coordonnées GPS : 278 / 281
   L'Imperial Headspa                 | Institut de beauté             | 446 CHEMIN DES GRAMINEES 42330 SAINT-GAL
   La Poste                           | Bureau de poste                | 47 RUE MAURICE ANDRE 42330 SAINT-GALMIER
   La Source Du Bien-Naitre           | Bien-être / spa                | 400 CHEMIN DE COTE PATAY 42330 SAINT-GAL
+  Lacassagne Bfr                     | Plombier-chauffagiste          | 7 RUE DE LA RICHELANDE 42330 SAINT-GALMI
+  Lacassagne Cdm                     | Plombier-chauffagiste          | 7 RUE DE LA RICHELANDE 42330 SAINT-GALMI
+  Laurent Moreton                    | Paysagiste / entretien de jard | LA CHARPINIERE ROUTE DE RIVAS 42330 SAIN
   Le Colibri                         | Change / services financiers   | LE CLOS GALLEY 28 AVENUE JEAN MONNET 423
+  Les Jardins Authentiques           | Paysagiste / entretien de jard | 487 ROUTE DE LA VIALLARY 42330 SAINT-GAL
   Lipita Chiens Mediateurs           | Services personnels divers     | 36 LOTISSEMENT LE VERNAY 42330 SAINT-GAL
   Lisa Biffaud                       | Services personnels divers     | 28 AVENUE JEAN MONNET 42330 SAINT-GALMIE
+  Loire Deco                         | Plâtrier                       | 22 LOTISSEMENT DU PONT GAVE 42330 SAINT-
   Loire Multiservices                | Pressing / laverie             | 32 RUE MAURICE ANDRE 42330 SAINT-GALMIER
   Ls Beauty Studio                   | Institut de beauté             | 20 RUE MAURICE ANDRE 42330 SAINT-GALMIER
   M.E.K Au Service Du Particulier    | Services personnels divers     | 6 MONTEE DU VERNAY 42330 SAINT-GALMIER
@@ -149,35 +178,58 @@ avec coordonnées GPS : 278 / 281
   Mecadom-Services42                 | Garage (entretien auto)        | RUE DU PONT GAVE 42330 SAINT-GALMIER
   Mech'Creation                      | Coiffure                       | LE FRONTENAC 2 C RUE DE LA DAME NOIRE 42
   Mech'Creation                      | Coiffure                       | LE FRONTENAC 2 A RUE DE LA DAME NOIRE 42
+  Menui Pose Habitat                 | Menuisier (bois / PVC)         | 6 RUE BOURGCHANIN 42330 SAINT-GALMIER
+  Menuiserie Basset                  | Menuisier (bois / PVC)         | 29 CHEMIN DU BARRAGE 42330 SAINT-GALMIER
   Michael Neuville                   | Services personnels divers     | 6 RUE MAURICE ANDRE 42330 SAINT-GALMIER
   Michelle Pequignot                 | Services personnels divers     | 58 ALLEE DES TILLEULS 42330 SAINT-GALMIE
   Mon Drainage Lymphatique           | Bien-être / spa                | 10 MONTEE DE L'EGLISE 42330 SAINT-GALMIE
+  Morgan Auguste (Auguste)           | Paysagiste / entretien de jard | 26 AVENUE JEAN MONNET 42330 SAINT-GALMIE
   N'Barber                           | Coiffure                       | 19 RUE DIDIER GUETTON 42330 SAINT-GALMIE
   Nadege Drevet                      | Coiffure                       | 4 RUE DIDIER GUETTON 42330 SAINT-GALMIER
+  Palabost                           | Menuisier (bois / PVC)         | ZONE ARTISANALE LA RICHELANDE 42330 SAIN
+  Paulo Gomes Pereira                | Travaux de finition            | PAVILLON 15 HLM LA CHARPINIERE ROUTE DE 
+  Perenia Amenage Vos Exterieurs 42  | Paysagiste / entretien de jard | ROUTE DE CUZIEU 3 ZONE ARTISANALE LES FL
   Philippe Croiseau                  | Assurance / courtage           | 9 A 11 9 AVENUE JEAN DELANDE 42330 SAINT
   Pigmage                            | Institut de beauté             | 17 AVENUE ANTOINE RAVEL 42330 SAINT-GALM
+  Planet Compo                       | Menuisier (bois / PVC)         | ZI DU PONT GAVE 1 RUE DU FOREZ 42330 SAI
+  Pmp                                | Artisan du bâtiment            | LES BRUYERES ALLEE C 13 ROUTE DE LA THIE
   Pompes Funabres Familiales         | Pompes funèbres                | 14 AVENUE JEAN MONNET 42330 SAINT-GALMIE
   Pompes Funebres Mazet              | Pompes funèbres                | ZONE COMMERCIAL DE BESACIEUX 31 ZONE COM
+  R.P.F.                             | Installation eau / gaz / clima | LE CHARMEY 42330 SAINT-GALMIER
+  Rb Carrelage                       | Carreleur / revêtements        | 7 LOTISSEMENT LES TERRASSES ENSOLEILLEES
+  Rb Plomberie                       | Plombier-chauffagiste          | 763 CHEMIN DE LA BERINCHE 42330 SAINT-GA
+  Real-Lacroix Chauffages Et Bains   | Plombier-chauffagiste          | 10 RUE DU FOREZ 42330 SAINT-GALMIER
+  Rene Koch                          | Couvreur                       | RUE DU PONT GAVE 42330 SAINT-GALMIER
+  Renfort Solutions                  | Travaux spécialisés (autres)   | 1 T IMPASSE DU CLOS SAINTE MARIE 42330 S
   Retrouv ' Aieux                    | Services personnels divers     | 2 B IMPASSE DU BARRAGE 42330 SAINT-GALMI
+  Rhone-Alpes Ascenseurs (Ra Ascense | Autres travaux d'installation  | ZONE ARTISANALE LES FLACHES 42330 SAINT-
+  Rudy Dedinger                      | Couvreur                       | RUE DU PONT GAVE 42330 SAINT-GALMIER
+  S.P. Habitat                       | Électricien                    | 30 RUE DU PONT GAVE 42330 SAINT-GALMIER
+  S.P. Maconnerie Multibati Services | Maçon                          | 4 MONTEE MAUVERNAY 42330 SAINT-GALMIER
   Sagec Gespat                       | Conseil financier              | 19 AVENUE JEAN DELANDE 42330 SAINT-GALMI
   Saint Galmier Motoculture          | Réparation électroménager      | 4 AVENUE ANTOINE RAVEL 42330 SAINT-GALMI
   Sarl Neel                          | Garage (entretien auto)        | 9 AVENUE DE LA COISE 42330 SAINT-GALMIER
   Scm Du Sourire Baldo               | Change / services financiers   | 9 PLACE DES ROCHES 42330 SAINT-GALMIER
+  Sebastien Fraisse                  | Plombier-chauffagiste          | 12 LOT LES BALCONS DE LA COISE 42330 SAI
   Severine Ducreux                   | Auto-école                     | AVENUE JEAN MONNET 42330 SAINT-GALMIER
   So Fitness                         | Salle de sport / fitness       | 1 ROUTE DE L'AERODROME 42330 SAINT-GALMI
   Sonia Lopez Santana (Gesvret)      | Services personnels divers     | 3 MONTEE ALEXANDRE MAUVERNAY 42330 SAINT
   Spirito Colosseo                   | Services personnels divers     | 35 RUE DIDIER GUETTON 42330 SAINT-GALMIE
   Square Habitat Credit Agricole Loi | Agence immobilière             | 45 RUE MAURICE ANDRE 42330 SAINT-GALMIER
+  Srm                                | Menuiserie métallique / serrur | 32 ROUTE DE LA CROIX RAPEAU 42330 SAINT-
   Stephane Perret                    | Conseil financier              | 21 RUE PAUL DOUMER 42330 SAINT-GALMIER
+  Technic Bois                       | Menuisier (bois / PVC)         | LES FLACHES 42330 SAINT-GALMIER
+  Tgbl Sas                           | Paysagiste / entretien de jard | 8 ZONE ARTISANALE LES FLACHES 42330 SAIN
+  Thierry Barbier                    | Menuisier (bois / PVC)         | 2 ROUTE DE RIVAS 42330 SAINT-GALMIER
   Toutou Dou'Che                     | Services personnels divers     | 26 AVENUE JEAN MONNET 42330 SAINT-GALMIE
   Wealstone                          | Agence immobilière             | PLACE PEYRET- LACOMBE 42330 SAINT-GALMIE
+  Yann Paysage                       | Paysagiste / entretien de jard | 15 LOT LES BALCONS DE LA COISE 42330 SAI
   Yolande Jacquemet (Krupa)          | Services personnels divers     | OCEANELY 5 B ROUTE DE L'AERODROME 42330 
 
------ SERVICES LIBÉRAUX (117) -----
+----- SERVICES LIBÉRAUX (105) -----
   Aid                                | Architecte                     | LA BOUDINIERE 42330 SAINT-GALMIER
   Alexis Migliore (Migliore)         | Infirmier(ère)                 | 9 AVENUE JEAN DELANDE 42330 SAINT-GALMIE
   Ambulances Taxi O Martin           | Laboratoire d'analyses médical | 32 RUE DIDIER GUETTON 42330 SAINT-GALMIE
-  Amp Concept 42                     | Ingénierie / études techniques | 15 IMPASSE DU BARRAGE 42330 SAINT-GALMIE
   Andre Letang                       | Santé (autres praticiens)      | 4 RUE MOZART 42330 SAINT-GALMIER
   Anne Jalard (Landrot)              | Santé (autres praticiens)      | 34 ROUTE DE CHEVRIERES 42330 SAINT-GALMI
   Anne-Sophie Pages                  | Infirmier(ère)                 | RESIDENCE LE FRONTENAC AVENUE JEAN MONNE
@@ -186,19 +238,15 @@ avec coordonnées GPS : 278 / 281
   Auralaw                            | Avocat / notaire / huissier    | IMMEUBLE LE FRONTENAC 42330 SAINT-GALMIE
   Aurelie Moulin (Schoeffler)        | Médecin spécialiste            | 2 C RUE DE LA DAME NOIRE 42330 SAINT-GAL
   Aurelie Patraccone (Goutagny)      | Kinésithérapeute / orthophonis | 18 BOULEVARD DES CRETES 42330 SAINT-GALM
-  Automotive Consulting Engineering  | Ingénierie / études techniques | 2 PLACE DU BELVEDERE 42330 SAINT-GALMIER
   Aymerick Thinard                   | Infirmier(ère)                 | 4 BOULEVARD GABRIEL COUSIN 42330 SAINT-G
   B.C.S. Conseils                    | Expert-comptable               | 33 AVENUE JEAN MONNET 42330 SAINT-GALMIE
   Baptiste Bornet                    | Infirmier(ère)                 | LE CLOS GALLEY 28 AVENUE JEAN MONNET 423
   Baptiste Perret                    | Santé (autres praticiens)      | 2 RUE DU 11 NOVEMBRE 42330 SAINT-GALMIER
-  Bati Energ'Ethique                 | Ingénierie / études techniques | ZAC BESACIEUX ROUTE DE CUZIEU 42330 SAIN
   Bati Ingenerie                     | Architecte                     | ZAC BESACIEUX BATIMENT LE SULKY ROUTE DE
   Bati Travaux Conseil               | Architecte                     | ZONE COMMERCIALE BESACIEUX LE SULKY ROUT
   Beatrice Solelhac                  | Médecin spécialiste            | 28 BOULEVARD DES CRETES 42330 SAINT-GALM
   Bertrand Mercier Architecte        | Architecte                     | RESIDENCE LE PARVIS 11 A PLACE CAMILLE P
   Blandine Donnet                    | Chirurgien-dentiste            | 6 B RUE DUPUY 42330 SAINT-GALMIER
-  C E I Thiery                       | Ingénierie / études techniques | 30 ROUTE DE CHEVRIERES 42330 SAINT-GALMI
-  C.R.E                              | Ingénierie / études techniques | 3 LOTISSEMENT DOMAINE DE LA BROSSE 42330
   Cabinet Dentaire Beau Sourire      | Chirurgien-dentiste            | 18 BOULEVARD DES CRETES 42330 SAINT-GALM
   Camille Ferriol                    | Médecin généraliste            | 18 BOULEVARD DES CRETES 42330 SAINT-GALM
   Camille Pesquie                    | Médecin généraliste            | 18 RUE DIDIER GUETTON 42330 SAINT-GALMIE
@@ -212,7 +260,6 @@ avec coordonnées GPS : 278 / 281
   Clement Henon                      | Infirmier(ère)                 | 28 BOULEVARD DES CRETES 42330 SAINT-GALM
   Colyne Debourg                     | Kinésithérapeute / orthophonis | 4 BOULEVARD GABRIEL COUSIN 42330 SAINT-G
   Coralie Mairot                     | Kinésithérapeute / orthophonis | 14 RUE HECTOR BERLIOZ 42330 SAINT-GALMIE
-  D.E.C (Dorel Economie De La Constr | Ingénierie / études techniques | 36 B AVENUE JEAN MONNET 42330 SAINT-GALM
   David Guingand                     | Infirmier(ère)                 | 1 T ROUTE DE L'AERODROME 42330 SAINT-GAL
   Didier Courault                    | Kinésithérapeute / orthophonis | BOULEVARD DES CRETES 42330 SAINT-GALMIER
   Double F Architecture              | Architecte                     | 7 PLACE DES ROCHES 42330 SAINT-GALMIER
@@ -220,11 +267,9 @@ avec coordonnées GPS : 278 / 281
   Emilie Leonetti                    | Santé (autres praticiens)      | 12 RUE SAINT-CLEMENT 42330 SAINT-GALMIER
   Emmanuelle Ollien                  | Médecin spécialiste            | 18 BOULEVARD DES CRETES 42330 SAINT-GALM
   Eva Vilela                         | Infirmier(ère)                 | 7 LOTISSEMENT LES PRIMEVERES 42330 SAINT
-  Exetec                             | Ingénierie / études techniques | 2 CHEMIN DES ECUREUILS 42330 SAINT-GALMI
   Fiscalliance                       | Expert-comptable               | 4 CHEMIN DU GORD 42330 SAINT-GALMIER
   Frederique Bonnefoy                | Chirurgien-dentiste            | 9 PLACE DES ROCHES 42330 SAINT-GALMIER
   Fuselier Chantal Et Denis Sft      | Chirurgien-dentiste            | 1 NOIROT 42330 SAINT-GALMIER
-  Gc Engineering                     | Ingénierie / études techniques | 22 RUE SAINT EXUPERY 42330 SAINT-GALMIER
   Geolis                             | Géomètre                       | 7 AVENUE DE LA COISE 42330 SAINT-GALMIER
   Gerald Bussy                       | Santé (autres praticiens)      | 28 RUE JEAN MONNET 42330 SAINT-GALMIER
   Gregory Morel                      | Infirmier(ère)                 | FORMUP LA CHARPINIERE 42330 SAINT-GALMIE
@@ -240,7 +285,6 @@ avec coordonnées GPS : 278 / 281
   Lea Petit                          | Kinésithérapeute / orthophonis | 7 AVENUE ANTOINE RAVEL 42330 SAINT-GALMI
   Lea Sophrologie                    | Santé (autres praticiens)      | SAINT-GALMIER 2 RUE DUPUY 42330 SAINT-GA
   Leo Philibert                      | Infirmier(ère)                 | 1 T ROUTE DE L'AERODROME 42330 SAINT-GAL
-  Maison Kaizen                      | Ingénierie / études techniques | PLACE PEYRET- LACOMBE 42330 SAINT-GALMIE
   Manon Aymard                       | Infirmier(ère)                 | AVENUE JEAN MONNET 42330 SAINT-GALMIER
   Marie Tamaillon                    | Infirmier(ère)                 | BATIMENT C - LE COLIBRI 28 AVENUE JEAN M
   Marie Touraine                     | Chirurgien-dentiste            | 9 PLACE DES ROCHES 42330 SAINT-GALMIER
@@ -254,7 +298,6 @@ avec coordonnées GPS : 278 / 281
   Nicole Arnaud                      | Santé (autres praticiens)      | BOULEVARD DES CRETES 42330 SAINT-GALMIER
   Notalliance                        | Avocat / notaire / huissier    | 1 AVENUE ANTOINE RAVEL 42330 SAINT-GALMI
   Olivier Granet                     | Infirmier(ère)                 | 13 PLACE CAMILLE PASSOT 42330 SAINT-GALM
-  Optim&Home                         | Ingénierie / études techniques | 45 ROUTE DE BELLEGARDE 42330 SAINT-GALMI
   Oriane Palley                      | Infirmier(ère)                 | 33 LOTISSEMENT LE VERNAY 42330 SAINT-GAL
   Patrick Brosse                     | Vétérinaire                    | 13 B ROUTE DE BELLEGARDE 42330 SAINT-GAL
   Pauline Garcia                     | Médecin généraliste            | 1 T MONTEE DE FAROUJAT 42330 SAINT-GALMI
@@ -266,7 +309,6 @@ avec coordonnées GPS : 278 / 281
   Pierrick Prat                      | Architecte                     | ZAC BESACIEUX BAT LE SULKY ROUTE DE CUZI
   Rejane Gambiez (Gueudet)           | Infirmier(ère)                 | 10 AVENUE DE VERDUN 42330 SAINT-GALMIER
   Remi Bouteille                     | Kinésithérapeute / orthophonis | 11 RUE CAMILLE PASSOT 42330 SAINT-GALMIE
-  Renovautonomie                     | Ingénierie / études techniques | 2 CHEMIN DES ECUREUILS 42330 SAINT-GALMI
   Richard Barrier                    | Infirmier(ère)                 | LE FRONTENAC JEAN MONNET 42330 SAINT-GAL
   Sagec Baldo                        | Expert-comptable               | 19 AVENUE JEAN DELANDE 42330 SAINT-GALMI
   Samuel Bigot                       | Kinésithérapeute / orthophonis | 28 AVENUE JEAN MONNET 42330 SAINT-GALMIE
@@ -289,7 +331,6 @@ avec coordonnées GPS : 278 / 281
   Virginie Paire                     | Kinésithérapeute / orthophonis | 34 ROUTE DE CHEVRIERES 42330 SAINT-GALMI
   Wendy Di Lena (Terrade)            | Kinésithérapeute / orthophonis | 1 PASSAGE DU CLOITRE 42330 SAINT-GALMIER
   William Vanpeperstraete            | Vétérinaire                    | 13 ROUTE DE BELLEGARDE 42330 SAINT-GALMI
-  Xbo Consulting                     | Ingénierie / études techniques | 10 LD LE DOMAINE DE BONNEFONDS 42330 SAI
   Yvan Barbier                       | Médecin généraliste            | 10 ROUTE DE L'AERODROME 42330 SAINT-GALM
 
 ----- Codes NAF écartés (les plus fréquents) -----
@@ -305,14 +346,12 @@ avec coordonnées GPS : 278 / 281
   64.20Z : 15
   01.42Z : 13
   93.29Z : 13
+  71.12B : 12
   01.11Z : 11
   90.01Z : 11
   81.21Z : 10
   85.59B : 9
   01.41Z : 9
-  43.32A : 9
-  43.31Z : 9
-  81.30Z : 8
   47.89Z : 8
   47.91B : 7
   90.03A : 7
@@ -321,5 +360,7 @@ avec coordonnées GPS : 278 / 281
   85.52Z : 7
   68.32A : 6
   85.51Z : 6
-  43.22A : 6
   01.49Z : 5
+  88.99B : 5
+  85.59A : 5
+  82.11Z : 4
