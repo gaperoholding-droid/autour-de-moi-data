@@ -19,6 +19,8 @@ jobs:
       - uses: actions/setup-python@v5
         with:
           python-version: "3.12"
+      - name: Installer DuckDB
+        run: pip install --quiet duckdb
       - name: Générer le département
         env:
           DEP: ${{ github.event.inputs.dep }}
