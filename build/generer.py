@@ -18,6 +18,7 @@ PAUSE       = float(os.environ.get("PAUSE", "0.5"))          # pause entre deux 
 BUDGET_MIN  = int(os.environ.get("BUDGET_MIN", "300"))       # minutes max (GitHub coupe à 360)
 TIMEOUT_OVP = int(os.environ.get("TIMEOUT_OVERPASS", "90"))  # secondes max par requête
 OUT         = pathlib.Path("public/communes"); OUT.mkdir(parents=True, exist_ok=True)
+OUT_MAIRIES = pathlib.Path("public/mairies"); OUT_MAIRIES.mkdir(parents=True, exist_ok=True)
 OVERPASS    = [
     "https://overpass.kumi.systems/api/interpreter",
     "https://overpass-api.de/api/interpreter",
@@ -137,8 +138,33 @@ def arrondissements():
         codes += [str(base + i) for i in range(n)]
     return codes
 
+def dep_de(code):
+    c = (code or "").upper()
+    if c[:2] in ("2A", "2B"):
+        return c[:2]
+    if c[:2] in ("97", "98"):
+        return c[:3]
+    return c[:2]
+
+def ecrire_mairies():
+    """Découpe build/mairies_emails.json en public/mairies/<dep>.json (routage des signalements)."""
+    src = pathlib.Path("build/mairies_emails.json")
+    if not src.exists():
+        print("mairies_emails.json absent : routage mairies ignoré.", flush=True)
+        return 0
+    m = json.loads(src.read_text(encoding="utf-8"))
+    pardep = {}
+    for code, email in m.items():
+        pardep.setdefault(dep_de(code), {})[code] = email
+    for d, sous in pardep.items():
+        (OUT_MAIRIES / (d + ".json")).write_text(
+            json.dumps(sous, ensure_ascii=False, separators=(",", ":")), encoding="utf-8")
+    print("E-mails mairies : %d communes, %d départements." % (len(m), len(pardep)), flush=True)
+    return len(m)
+
 def main():
     t0 = time.time()
+    nb_mairies = ecrire_mairies()      # d'abord : toujours publié, même si la génération est partielle
     print("Liste des communes…", flush=True)
     communes = http("https://geo.api.gouv.fr/communes?fields=code,nom,population,codesPostaux,centre&format=json", timeout=120)
     par_code = {c["code"]: c for c in communes}
@@ -196,6 +222,7 @@ def main():
     build = {"genere_le": time.strftime("%Y-%m-%dT%H:%M:%SZ", time.gmtime()),
              "seuil_population": SEUIL_POP, "communes_ok": ok, "communes_vides": vides,
              "echecs": echecs, "non_traitees_budget": arretes, "total_cible": len(liste),
+             "mairies_emails": nb_mairies,
              "minutes": round((time.time() - t0) / 60.0, 1)}
     pathlib.Path("public/build.json").write_text(json.dumps(build, ensure_ascii=False, indent=2), encoding="utf-8")
     pathlib.Path("public/index.html").write_text(
