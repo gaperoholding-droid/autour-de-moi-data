@@ -49,6 +49,7 @@ def main():
     print("total_results = %s | total_pages = %s" % (total, pages), flush=True)
 
     vus = set(); groupes = {"commerce": [], "service": [], "liberal": []}; exclus = {}
+    nom_commune = ""
     page = 1
     while page <= min(pages, 400):
         try:
@@ -70,8 +71,10 @@ def main():
                     exclus[code_naf] = exclus.get(code_naf, 0) + 1
                     continue
                 vus.add(siret)
+                nom_commune = nom_commune or (e.get("libelle_commune") or "")
                 groupes[k[0]].append({"nom": nom_etab(res, e), "lib": k[1],
                                       "adr": (e.get("adresse") or "").strip(),
+                                      "cp": e.get("code_postal") or "",
                                       "lat": e.get("latitude"), "lon": e.get("longitude")})
         page += 1
         time.sleep(0.25)
@@ -99,6 +102,10 @@ def main():
             out("  %s : %d" % (code, n))
     with open("build/_resultat_%s.txt" % CODE, "w", encoding="utf-8") as fh:
         fh.write("\n".join(L) + "\n")
+    data = {"info": {"nom": (nom_commune or CODE).title(), "code": CODE},
+            "c": groupes["commerce"], "s": groupes["service"], "l": groupes["liberal"]}
+    with open("build/_data_%s.json" % CODE, "w", encoding="utf-8") as fh:
+        json.dump(data, fh, ensure_ascii=False, separators=(",", ":"))
 
 if __name__ == "__main__":
     main()

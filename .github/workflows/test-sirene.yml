@@ -29,6 +29,6 @@ jobs:
         run: |
           git config user.name "github-actions"
           git config user.email "actions@github.com"
-          git add build/_resultat_*.txt || true
+          git add build/_resultat_*.txt build/_data_*.json || true
           git commit -m "Résultat test SIRENE ${{ github.event.inputs.commune }}" || echo "rien à committer"
           git push || echo "push impossible"
