@@ -10,5 +10,21 @@
   probe 2026-08/75056 -> HTTP Error 404: Not Found
   probe 2026-08/42218 -> HTTP Error 404: Not Found
   probe 2026-08/42222 -> HTTP Error 404: Not Found
+
+### LISTE https://files.data.gouv.fr/geo-sirene/
+<html>
+<head><title>Index of /geo-sirene/</title></head>
+<body>
+<h1>Index of /geo-sirene/</h1><hr><pre><a href="../">../</a>
+<a href="decommissionnement.txt">decommissionnement.txt</a>                             15-Apr-2026 12:42                 218
+</pre><hr></body>
+</html>
+
+
+### LISTE https://files.data.gouv.fr/geo-sirene/2025-07/
+  erreur: HTTP Error 404: Not Found
+
+### LISTE https://files.data.gouv.fr/geo-sirene/2025-07/communes/
+  erreur: HTTP Error 404: Not Found
 Impossible de trouver un millésime geo-sirene disponible.
 EXIT NON ZERO
