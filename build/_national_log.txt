@@ -1,9 +1,9 @@
 Découverte des fichiers…
   télécharge geoloc-geolocalisationetablissement-sirene-pour-etudes-statistiques-parquet.parquet
-    -> 814 Mo en 88s
+    -> 814 Mo en 64s
   télécharge stock-stocketablissement-parquet.parquet
-    -> 2221 Mo en 213s
+    -> 2221 Mo en 185s
   télécharge stock-stockunitelegale-parquet.parquet
-    -> 714 Mo en 59s
+    -> 714 Mo en 75s
 Requête DuckDB (jointure 3 fichiers)…
-Terminé : 323 communes, C=11655 S=24211 L=10332, 6.1 min.
+Terminé : 323 communes, C=11010 S=20071 L=8152, 5.6 min.

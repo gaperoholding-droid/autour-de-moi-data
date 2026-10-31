@@ -1,9 +1,9 @@
 {
-  "genere_le": "2026-10-31T16:17:24Z",
+  "genere_le": "2026-10-31T16:24:04Z",
   "perimetre": "42",
   "communes_fichiers": 323,
-  "total_commerces": 11655,
-  "total_services": 24211,
-  "total_liberaux": 10332,
-  "minutes": 6.1
+  "total_commerces": 11010,
+  "total_services": 20071,
+  "total_liberaux": 8152,
+  "minutes": 5.6
 }
