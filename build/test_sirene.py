@@ -177,7 +177,9 @@ def main():
         time.sleep(0.25)
 
     print("Enrichissement OpenStreetMap (téléphone / site / horaires)…", flush=True)
-    nb_enr = enrichir(groupes, osm_pois(CODE))
+    pois = osm_pois(CODE)
+    nb_pois = len(pois)
+    nb_enr = enrichir(groupes, pois)
     tot = sum(len(v) for v in groupes.values())
     avec_geo = sum(1 for v in groupes.values() for f in v if f["lat"] and f["lon"])
     avec_tel = sum(1 for v in groupes.values() for f in v if f.get("tel"))
@@ -191,7 +193,7 @@ def main():
     out("COMMERCES : %d   |   SERVICES : %d   |   SERVICES LIBÉRAUX : %d   |   total : %d"
         % (len(groupes["commerce"]), len(groupes["service"]), len(groupes["liberal"]), tot))
     out("avec coordonnées GPS : %d / %d" % (avec_geo, tot))
-    out("enrichis via OpenStreetMap : %d (téléphone : %d, site web : %d)" % (nb_enr, avec_tel, avec_web))
+    out("OSM points récupérés : %d | enrichis : %d (téléphone : %d, site web : %d)" % (nb_pois, nb_enr, avec_tel, avec_web))
     for g in ("commerce", "service", "liberal"):
         lst = sorted(groupes[g], key=lambda x: x["nom"].lower())
         out("\n----- %s (%d) -----" % (TITRES[g], len(lst)))
