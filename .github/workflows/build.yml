@@ -1,8 +1,9 @@
-name: Générer les annuaires (nuit)
+name: Génération mensuelle (SIRENE)
 
+# SIRENE publie le 1er de chaque mois : on régénère le 2 à 03:00 UTC.
 on:
   schedule:
-    - cron: "0 2 * * *"
+    - cron: "0 3 2 * *"
   workflow_dispatch:
 
 permissions:
@@ -18,20 +19,17 @@ jobs:
   generer:
     runs-on: ubuntu-latest
     steps:
-      - name: Récupérer le dépôt
-        uses: actions/checkout@v4
-
-      - name: Installer Python
-        uses: actions/setup-python@v5
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
         with:
           python-version: "3.12"
-
-      - name: Générer les annuaires
+      - name: Installer DuckDB
+        run: pip install --quiet duckdb
+      - name: Générer la France entière
         env:
-          SEUIL_POP: "10000"
-          PAUSE: "1.2"
-        run: python build/generer.py
-
+          DEP: "ALL"
+          BUDGET_MIN: "320"
+        run: python build/generer_national.py
       - name: Préparer la publication
         uses: actions/upload-pages-artifact@v3
         with:

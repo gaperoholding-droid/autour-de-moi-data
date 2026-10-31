@@ -93,9 +93,29 @@ def flush_commune(code, ville, rows):
     (OUT / (code + ".json")).write_text(json.dumps(res, ensure_ascii=False, separators=(",", ":")), encoding="utf-8")
     return len(groupes["commerce"]), len(groupes["service"]), len(groupes["liberal"])
 
+def dep_de(code):
+    c = (code or "").upper()
+    if c[:2] in ("2A", "2B"): return c[:2]
+    if c[:2] in ("97", "98"): return c[:3]
+    return c[:2]
+
+def ecrire_mairies():
+    src = pathlib.Path("build/mairies_emails.json")
+    if not src.exists():
+        print("mairies_emails.json absent : routage mairies ignoré.", flush=True); return
+    m = json.loads(src.read_text(encoding="utf-8"))
+    OUTM = pathlib.Path("public/mairies"); OUTM.mkdir(parents=True, exist_ok=True)
+    pardep = {}
+    for code, email in m.items():
+        pardep.setdefault(dep_de(code), {})[code] = email
+    for d, sous in pardep.items():
+        (OUTM / (d + ".json")).write_text(json.dumps(sous, ensure_ascii=False, separators=(",", ":")), encoding="utf-8")
+    print("E-mails mairies : %d communes, %d départements." % (len(m), len(pardep)), flush=True)
+
 def main():
     t0 = time.time()
     import duckdb
+    ecrire_mairies()
     print("Découverte des fichiers…", flush=True)
     u_geo = resource(DS_GEO, "parquet")
     u_etab = resource(DS_SIRENE, "parquet", inc=["StockEtablissement"], exc=["Historique", "LiensSuccession"])
