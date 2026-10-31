@@ -4,6 +4,7 @@ total_results = 1507 | total_pages = 61
 ===== RÉSULTAT =====
 COMMERCES : 71   |   SERVICES : 146   |   SERVICES LIBÉRAUX : 105   |   total : 322
 avec coordonnées GPS : 318 / 322
+enrichis via OpenStreetMap : 16 (téléphone : 10, site web : 11)
 
 ----- COMMERCES (71) -----
   After Fly                          | Restaurant                     | ALLEE LAURENT PORTAFAIX 42330 SAINT-GALM
