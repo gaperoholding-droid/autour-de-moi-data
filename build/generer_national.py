@@ -58,14 +58,24 @@ def trouver_mois():
             except Exception as e:
                 if log < 12:
                     print("  probe %s/%s -> %s" % (mo, s, str(e)[:70]), flush=True); log += 1
-    # diagnostic : lister la structure réelle
-    for u in [BASE + "/", BASE + "/2025-07/", BASE + "/2025-07/communes/"]:
-        print("\n### LISTE %s" % u, flush=True)
+    # diagnostic : note de décommissionnement + sources de remplacement
+    print("\n### decommissionnement.txt", flush=True)
+    try:
+        print(http(BASE + "/decommissionnement.txt", timeout=30).decode("utf-8", "replace")[:1500], flush=True)
+    except Exception as e:
+        print("  erreur: %s" % str(e)[:80], flush=True)
+    for slug in ["base-sirene-des-etablissements-2024-geolocalisee-geoparquet",
+                 "base-sirene-des-etablissements-siret-geolocalisee-avec-la-base-dadresse-nationale-ban"]:
+        print("\n### data.gouv dataset %s" % slug, flush=True)
         try:
-            print(http(u, timeout=30).decode("utf-8", "replace")[:1500], flush=True)
+            j = http_json("https://www.data.gouv.fr/api/1/datasets/%s/" % slug, timeout=40)
+            print("titre:", j.get("title"), flush=True)
+            for r in j.get("resources", [])[:25]:
+                print("  - [%s] %s  (%s)  %s" % (r.get("format"), r.get("title", "")[:60],
+                      (str(r.get("filesize")) if r.get("filesize") else "?"), r.get("url")), flush=True)
         except Exception as e:
-            print("  erreur: %s" % str(e)[:80], flush=True)
-    sys.exit("Impossible de trouver un millésime geo-sirene disponible.")
+            print("  erreur: %s" % str(e)[:100], flush=True)
+    sys.exit("geo-sirene décommissionnée — voir sources ci-dessus.")
 
 # --- colonnes possibles (on prend la 1re présente) ---
 def pick(row, *names):
