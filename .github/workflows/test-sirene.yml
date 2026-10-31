@@ -1,6 +1,7 @@
 name: Test SIRENE (une commune)
 
-# Lancement manuel uniquement. N'affecte pas le site : affiche le résultat dans les logs.
+# Lancement manuel uniquement. Affiche le résultat dans les logs ET l'écrit
+# dans build/_resultat_<code>.txt (committé) pour pouvoir le relire facilement.
 on:
   workflow_dispatch:
     inputs:
@@ -8,6 +9,9 @@ on:
         description: "Code INSEE de la commune à tester"
         required: true
         default: "42222"
+
+permissions:
+  contents: write
 
 jobs:
   test:
@@ -21,3 +25,10 @@ jobs:
         env:
           CODE_COMMUNE: ${{ github.event.inputs.commune }}
         run: python build/test_sirene.py
+      - name: Publier le résultat dans le dépôt
+        run: |
+          git config user.name "github-actions"
+          git config user.email "actions@github.com"
+          git add build/_resultat_*.txt || true
+          git commit -m "Résultat test SIRENE ${{ github.event.inputs.commune }}" || echo "rien à committer"
+          git push || echo "push impossible"

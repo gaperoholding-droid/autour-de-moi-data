@@ -163,22 +163,27 @@ def main():
 
     tot = sum(len(v) for v in groupes.values())
     avec_geo = sum(1 for v in groupes.values() for f in v if f["lat"] and f["lon"])
-    print("\n===== RÉSULTAT =====", flush=True)
-    print("COMMERCES : %d   |   SERVICES : %d   |   SERVICES LIBÉRAUX : %d   |   total : %d"
-          % (len(groupes["commerce"]), len(groupes["service"]), len(groupes["liberal"]), tot), flush=True)
-    print("avec coordonnées GPS : %d / %d" % (avec_geo, tot), flush=True)
-
+    L = []
+    def out(s=""):
+        print(s, flush=True); L.append(s)
+    out("== TEST SIRENE %s — commune %s ==" % (VERSION, CODE))
+    out("total_results = %s | total_pages = %s" % (total, pages))
+    out("\n===== RÉSULTAT =====")
+    out("COMMERCES : %d   |   SERVICES : %d   |   SERVICES LIBÉRAUX : %d   |   total : %d"
+        % (len(groupes["commerce"]), len(groupes["service"]), len(groupes["liberal"]), tot))
+    out("avec coordonnées GPS : %d / %d" % (avec_geo, tot))
     for g in ("commerce", "service", "liberal"):
         lst = sorted(groupes[g], key=lambda x: x["nom"].lower())
-        print("\n----- %s (%d) -----" % (TITRES[g], len(lst)), flush=True)
+        out("\n----- %s (%d) -----" % (TITRES[g], len(lst)))
         for f in lst:
-            print("  %-34s | %-30s | %s" % (f["nom"][:34], f["lib"][:30], f["adr"][:40]), flush=True)
-
+            out("  %-34s | %-30s | %s" % (f["nom"][:34], f["lib"][:30], f["adr"][:40]))
     if exclus:
         top = sorted(exclus.items(), key=lambda kv: kv[1], reverse=True)[:30]
-        print("\n----- Codes NAF écartés (les plus fréquents) -----", flush=True)
+        out("\n----- Codes NAF écartés (les plus fréquents) -----")
         for code, n in top:
-            print("  %s : %d" % (code, n), flush=True)
+            out("  %s : %d" % (code, n))
+    with open("build/_resultat_%s.txt" % CODE, "w", encoding="utf-8") as fh:
+        fh.write("\n".join(L) + "\n")
 
 if __name__ == "__main__":
     main()
