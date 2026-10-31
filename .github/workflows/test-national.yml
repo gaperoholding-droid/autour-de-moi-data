@@ -22,8 +22,12 @@ jobs:
       - name: Générer le département
         env:
           DEP: ${{ github.event.inputs.dep }}
-        run: python build/generer_national.py
+        run: |
+          mkdir -p build
+          set -o pipefail
+          python build/generer_national.py 2>&1 | tee build/_national_log.txt || echo "EXIT=$?" >> build/_national_log.txt
       - name: Récupérer des témoins + bilan
+        if: always()
         run: |
           mkdir -p build
           cp public/build.json build/_national_build.json || true
@@ -32,6 +36,6 @@ jobs:
           cp public/c/42207.json build/_national_42207.json || true   # Saint-Étienne
           git config user.name "github-actions"
           git config user.email "actions@github.com"
-          git add build/_national_*.json || true
+          git add build/_national_*.json build/_national_log.txt || true
           git commit -m "Résultat test national (dep ${{ github.event.inputs.dep }})" || echo "rien à committer"
           git push || echo "push impossible"
