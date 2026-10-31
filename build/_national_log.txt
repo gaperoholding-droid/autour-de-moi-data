@@ -1,26 +1,15 @@
-  probe 2026-10/18233 -> HTTP Error 404: Not Found
-  probe 2026-10/75056 -> HTTP Error 404: Not Found
-  probe 2026-10/42218 -> HTTP Error 404: Not Found
-  probe 2026-10/42222 -> HTTP Error 404: Not Found
-  probe 2026-09/18233 -> HTTP Error 404: Not Found
-  probe 2026-09/75056 -> HTTP Error 404: Not Found
-  probe 2026-09/42218 -> HTTP Error 404: Not Found
-  probe 2026-09/42222 -> HTTP Error 404: Not Found
-  probe 2026-08/18233 -> HTTP Error 404: Not Found
-  probe 2026-08/75056 -> HTTP Error 404: Not Found
-  probe 2026-08/42218 -> HTTP Error 404: Not Found
-  probe 2026-08/42222 -> HTTP Error 404: Not Found
+Téléchargement du parquet : https://static.data.gouv.fr/resources/geolocalisation-des-etablissements-du-repertoire-sirene-pour-les-etudes-statistiques/20261021-064721/geoloc-geolocalisationetablissement-sirene-pour-etudes-statistiques-parquet.parquet
+  téléchargé en 74s (814 Mo)
+Requête DuckDB…
+Traceback (most recent call last):
+  File "/home/runner/work/autour-de-moi-data/autour-de-moi-data/build/generer_national.py", line 151, in <module>
+    main()
+  File "/home/runner/work/autour-de-moi-data/autour-de-moi-data/build/generer_national.py", line 110, in main
+    cur = con.execute(sql)
+          ^^^^^^^^^^^^^^^^
+_duckdb.BinderException: Binder Error: Referenced column "etatAdministratifEtablissement" not found in FROM clause!
+Candidate bindings: "distance_precision", "siret", "y_latitude", "epsg", "qualite_iris"
 
-### decommissionnement.txt
-Les traitements a l'origine de ces donnees ont ete decommissionnes en avril 2026, nous vous invitons a utiliser la base SIRENE geocodee produite par l'INSEE : https://www.data.gouv.fr/datasets/61d5e2d372a52d9f9411ff88
-
-
-### data.gouv dataset base-sirene-des-etablissements-2024-geolocalisee-geoparquet
-titre: Base SIRENE des établissements 2024 géolocalisée - geoparquet
-  - [parquet] sirene2024-geo.parquet  (972726667)  https://static.data.gouv.fr/resources/sirene-geolocalise-parquet/20240107-143656/sirene2024-geo.parquet
-
-### data.gouv dataset base-sirene-des-etablissements-siret-geolocalisee-avec-la-base-dadresse-nationale-ban
-titre: Base SIRENE des établissements (SIRET) - géolocalisée avec la Base d'Adresse Nationale (BAN)
-  - [url] Utiliser le fichier géolocalisé de l'INSEE  (?)  https://www.data.gouv.fr/datasets/geolocalisation-des-etablissements-du-repertoire-sirene-pour-les-etudes-statistiques
-geo-sirene décommissionnée — voir sources ci-dessus.
+LINE 10:         WHERE etatAdministratifEtablissement = 'A' AND codeCommuneEtablissement...
+                              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 EXIT NON ZERO
