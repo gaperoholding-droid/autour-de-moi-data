@@ -1,0 +1,71 @@
+### Ressources dataset INSEE 61d5e2d372a52d9f9411ff88
+titre: Géolocalisation des établissements du répertoire SIRENE-pour les études statistiques
+  [zip] Sirene : Fichier géolocalisation établissements - octob 1180311775  https://static.data.gouv.fr/resources/geolocalisation-des-etablissements-du-repertoire-sirene-pour-les-etudes-statistiques/20261021-064414/geoloc-geolocalisationetablissement-sirene-pour-etudes-statistiques-csv.zip
+  [parquet] Sirene : Fichier géolocalisation établissements - octob 814389380  https://static.data.gouv.fr/resources/geolocalisation-des-etablissements-du-repertoire-sirene-pour-les-etudes-statistiques/20261021-064721/geoloc-geolocalisationetablissement-sirene-pour-etudes-statistiques-parquet.parquet
+  [pdf] documentation-geolocalisationetablissements-sirene-pour 189985  https://static.data.gouv.fr/resources/geolocalisation-des-etablissements-du-repertoire-sirene-pour-les-etudes-statistiques/20260123-143212/documentation-geolocalisationetablissements-sirene-pouretudesstatistiques-v8.pdf
+
+### Schéma du parquet https://static.data.gouv.fr/resources/sirene-geolocalise-parquet/20240107-143656/sirene2024-geo.parquet
+  col: siren VARCHAR
+  col: nomUniteLegale VARCHAR
+  col: denominationUniteLegale VARCHAR
+  col: nic VARCHAR
+  col: siret VARCHAR
+  col: statutDiffusionEtablissement VARCHAR
+  col: dateCreationEtablissement DATE
+  col: trancheEffectifsEtablissement VARCHAR
+  col: anneeEffectifsEtablissement BIGINT
+  col: activitePrincipaleRegistreMetiersEtablissement VARCHAR
+  col: dateDernierTraitementEtablissement TIMESTAMP WITH TIME ZONE
+  col: etablissementSiege BOOLEAN
+  col: nombrePeriodesEtablissement BIGINT
+  col: complementAdresseEtablissement VARCHAR
+  col: numeroVoieEtablissement VARCHAR
+  col: indiceRepetitionEtablissement VARCHAR
+  col: typeVoieEtablissement VARCHAR
+  col: libelleVoieEtablissement VARCHAR
+  col: codePostalEtablissement VARCHAR
+  col: libelleCommuneEtablissement VARCHAR
+  col: libelleCommuneEtrangerEtablissement VARCHAR
+  col: distributionSpecialeEtablissement VARCHAR
+  col: codeCommuneEtablissement VARCHAR
+  col: codeCedexEtablissement VARCHAR
+  col: libelleCedexEtablissement VARCHAR
+  col: codePaysEtrangerEtablissement VARCHAR
+  col: libellePaysEtrangerEtablissement VARCHAR
+  col: complementAdresse2Etablissement VARCHAR
+  col: numeroVoie2Etablissement VARCHAR
+  col: indiceRepetition2Etablissement VARCHAR
+  col: typeVoie2Etablissement VARCHAR
+  col: libelleVoie2Etablissement VARCHAR
+  col: codePostal2Etablissement VARCHAR
+  col: libelleCommune2Etablissement VARCHAR
+  col: libelleCommuneEtranger2Etablissement VARCHAR
+  col: distributionSpeciale2Etablissement VARCHAR
+  col: codeCommune2Etablissement VARCHAR
+  col: codeCedex2Etablissement VARCHAR
+  col: libelleCedex2Etablissement VARCHAR
+  col: codePaysEtranger2Etablissement VARCHAR
+  col: libellePaysEtranger2Etablissement VARCHAR
+  col: dateDebut DATE
+  col: etatAdministratifEtablissement VARCHAR
+  col: enseigne1Etablissement VARCHAR
+  col: enseigne2Etablissement VARCHAR
+  col: enseigne3Etablissement VARCHAR
+  col: denominationUsuelleEtablissement VARCHAR
+  col: activitePrincipaleEtablissement VARCHAR
+  col: nomenclatureActivitePrincipaleEtablissement VARCHAR
+  col: caractereEmployeurEtablissement VARCHAR
+  col: geo_score DOUBLE
+  col: geo_type VARCHAR
+  col: geo_adresse VARCHAR
+  col: geo_id VARCHAR
+  col: geo_ligne VARCHAR
+  col: geo_l4 VARCHAR
+  col: geo_l5 VARCHAR
+  col: geometry GEOMETRY('OGC:CRS84')
+  col: quadkey VARCHAR
+
+### 1 ligne exemple
+  erreur duckdb: Invalid Input Error: Required module 'pytz' failed to import, due to the following Python exception:
+ModuleNotFoundError: No module named 'pytz'
+
