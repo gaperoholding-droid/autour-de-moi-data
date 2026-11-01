@@ -1,34 +1,30 @@
 # -*- coding: utf-8 -*-
-"""Diag : schéma du parquet géoloc INSEE (oct 2026) + ressources du dataset SIRENE complet."""
+"""Diag : couverture des données publiées sur GitHub Pages."""
 import json, urllib.request
-UA = {"User-Agent": "autour-de-moi/1.0 (contact@commercesautourdemoi.fr)"}
-def hj(u):
-    with urllib.request.urlopen(urllib.request.Request(u, headers=UA), timeout=60) as r:
-        return json.loads(r.read().decode("utf-8"))
+BASE = "https://gaperoholding-droid.github.io/autour-de-moi-data/"
+UA = {"User-Agent": "autour-de-moi-diag/1.0"}
 
-GEO = ("https://static.data.gouv.fr/resources/geolocalisation-des-etablissements-du-repertoire-sirene-"
-       "pour-les-etudes-statistiques/20261021-064721/"
-       "geoloc-geolocalisationetablissement-sirene-pour-etudes-statistiques-parquet.parquet")
+def get(path):
+    with urllib.request.urlopen(urllib.request.Request(BASE + path, headers=UA), timeout=40) as r:
+        return r.read()
 
-print("### Schéma GÉOLOC (oct 2026)")
+print("### build.json")
 try:
-    import duckdb
-    con = duckdb.connect()
-    try: con.execute("INSTALL httpfs; LOAD httpfs;")
-    except Exception: pass
-    cols = con.execute("DESCRIBE SELECT * FROM read_parquet('%s')" % GEO).fetchall()
-    for c in cols:
-        print("  ", c[0], c[1])
+    print(get("build.json").decode("utf-8"))
 except Exception as e:
-    print("  erreur duckdb:", str(e)[:200])
+    print("échec:", str(e)[:120])
 
-print("\n### Ressources dataset SIRENE complet (Stock Établissement / Unité légale)")
-try:
-    j = hj("https://www.data.gouv.fr/api/1/datasets/base-sirene-des-entreprises-et-de-leurs-etablissements-siren-siret/")
-    print("titre:", j.get("title"))
-    for r in j.get("resources", [])[:80]:
-        t = (r.get("title") or "")
-        if any(x in t for x in ("Stock", "stock", "Etablissement", "Unite", "parquet", ".csv")) or (r.get("format") or "").lower() in ("csv", "parquet", "zip"):
-            print("  [%s] %-60s %s  %s" % (r.get("format"), t[:60], r.get("filesize"), r.get("url")))
-except Exception as e:
-    print("  erreur:", str(e)[:150])
+echants = {
+ "75056": "Paris", "69123": "Lyon", "13055": "Marseille", "31555": "Toulouse",
+ "06088": "Nice", "33063": "Bordeaux", "59350": "Lille", "44109": "Nantes",
+ "67482": "Strasbourg", "42222": "Saint-Galmier", "2A004": "Ajaccio",
+ "97411": "Saint-Denis (974)", "01004": "Ambérieu", "50129": "Carentan",
+ "01001": "petit village (Abergement)",
+}
+print("\n### Échantillon de communes (C/S/L)")
+for code, nom in echants.items():
+    try:
+        d = json.loads(get("c/" + code + ".json"))
+        print("  OK   %-7s %-22s C=%d S=%d L=%d" % (code, nom, len(d["c"]), len(d["s"]), len(d["l"])))
+    except Exception as e:
+        print("  ---  %-7s %-22s absent (%s)" % (code, nom, str(e)[:40]))
