@@ -10,6 +10,10 @@
 }
 
 ### Échantillon de communes (C/S/L)
+  OK   69382   Lyon 2e (arr.)         C=2559 S=1269 L=1657
+  OK   69381   Lyon 1er (arr.)        C=1247 S=868 L=825
+  OK   75102   Paris 2e (arr.)        C=3894 S=3043 L=1954
+  OK   13202   Marseille 2e (arr.)    C=1544 S=1045 L=546
   OK   75056   Paris                  C=94952 S=90834 L=81366
   OK   69123   Lyon                   C=13916 S=13940 L=12577
   OK   13055   Marseille              C=20819 S=25182 L=19078
