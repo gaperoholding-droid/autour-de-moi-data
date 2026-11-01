@@ -164,6 +164,25 @@ def main():
         a, b, d = flush_commune(cur_code, cur_ville, buf)
         if a + b + d: ok += 1; tc += a; ts += b; tl += d
 
+    # Paris / Lyon / Marseille : fusion des arrondissements sous le code global de la ville
+    plm = {"75056": ("Paris", range(75101, 75121)),
+           "69123": ("Lyon", range(69381, 69390)),
+           "13055": ("Marseille", range(13201, 13217))}
+    for main_code, (nom, arrs) in plm.items():
+        agg = {"c": [], "s": [], "l": []}; trouve = False
+        for a in arrs:
+            f = OUT / (str(a) + ".json")
+            if not f.exists(): continue
+            trouve = True
+            dd = json.loads(f.read_text(encoding="utf-8"))
+            for k in ("c", "s", "l"): agg[k].extend(dd.get(k, []))
+        if not trouve: continue
+        for k in ("c", "s", "l"): agg[k].sort(key=lambda x: x["nom"].lower())
+        res = {"info": {"nom": nom, "code": main_code}, "c": agg["c"], "s": agg["s"], "l": agg["l"]}
+        (OUT / (main_code + ".json")).write_text(json.dumps(res, ensure_ascii=False, separators=(",", ":")), encoding="utf-8")
+        ok += 1
+        print("Fusion %s (%s) : C=%d S=%d L=%d" % (nom, main_code, len(agg["c"]), len(agg["s"]), len(agg["l"])), flush=True)
+
     build = {"genere_le": time.strftime("%Y-%m-%dT%H:%M:%SZ", time.gmtime()), "perimetre": DEP,
              "communes_fichiers": ok, "total_commerces": tc, "total_services": ts, "total_liberaux": tl,
              "minutes": round((time.time() - t0) / 60, 1)}
