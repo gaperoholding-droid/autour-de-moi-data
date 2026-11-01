@@ -15,6 +15,7 @@ except Exception as e:
     print("échec:", str(e)[:120])
 
 echants = {
+ "69382": "Lyon 2e (arr.)", "69381": "Lyon 1er (arr.)", "75102": "Paris 2e (arr.)", "13202": "Marseille 2e (arr.)",
  "75056": "Paris", "69123": "Lyon", "13055": "Marseille", "31555": "Toulouse",
  "06088": "Nice", "33063": "Bordeaux", "59350": "Lille", "44109": "Nantes",
  "67482": "Strasbourg", "42222": "Saint-Galmier", "2A004": "Ajaccio",
