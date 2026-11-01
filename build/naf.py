@@ -78,10 +78,11 @@ PRECIS = {
     "5629B": ("commerce", "Traiteur"),
     "5630Z": ("commerce", "Bar / café"),
 
+    # ---- Beauté & bien-être : classés en COMMERCE (coiffeurs, instituts, spa) ----
+    "9602A": ("commerce", "Coiffure"),
+    "9602B": ("commerce", "Institut de beauté"),
+    "9604Z": ("commerce", "Bien-être / spa"),
     # ================= SERVICES (prestation commerciale/artisanale) =================
-    "9602A": ("service", "Coiffure"),
-    "9602B": ("service", "Institut de beauté"),
-    "9604Z": ("service", "Bien-être / spa"),
     "9609Z": ("service", "Services personnels divers"),
     "9601A": ("service", "Blanchisserie (industrielle)"),
     "9601B": ("service", "Pressing / laverie"),
@@ -156,6 +157,8 @@ PRECIS = {
 
 # --- Rattrapage par sous-classe (4) puis division (2) si le code précis manque ---
 SOUS = {
+    "9602": ("commerce", "Coiffure / soins de beauté"),
+    "9604": ("commerce", "Bien-être"),
     "4520": ("service", "Garage automobile"),
     "8621": ("liberal", "Cabinet médical"),
     "8622": ("liberal", "Médecin spécialiste"),
