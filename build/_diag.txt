@@ -1,47 +1,27 @@
-### Schéma GÉOLOC (oct 2026)
-   siret VARCHAR
-   x FLOAT
-   y FLOAT
-   qualite_xy VARCHAR
-   epsg VARCHAR
-   plg_qp24 VARCHAR
-   plg_iris VARCHAR
-   plg_zus VARCHAR
-   plg_qp15 VARCHAR
-   plg_qva VARCHAR
-   plg_code_commune VARCHAR
-   distance_precision FLOAT
-   qualite_qp24 VARCHAR
-   qualite_iris VARCHAR
-   qualite_zus VARCHAR
-   qualite_qp15 VARCHAR
-   qualite_qva VARCHAR
-   y_latitude FLOAT
-   x_longitude FLOAT
+### build.json
+{
+  "genere_le": "2026-11-01T18:40:17Z",
+  "perimetre": "ALL",
+  "communes_fichiers": 34169,
+  "total_commerces": 1260870,
+  "total_services": 1681297,
+  "total_liberaux": 794344,
+  "minutes": 8.4
+}
 
-### Ressources dataset SIRENE complet (Stock Établissement / Unité légale)
-titre: Base Sirene des entreprises et de leurs établissements (SIREN, SIRET)
-  [zip] Sirene : Fichier StockUniteLegale - 01 octobre 2026          979789073  https://static.data.gouv.fr/resources/base-sirene-des-entreprises-et-de-leurs-etablissements-siren-siret/20261001-072119/stock-stockunitelegale-csv.zip
-  [parquet] Sirene : Fichier StockUniteLegale - 01 octobre 2026 (format  713585991  https://static.data.gouv.fr/resources/base-sirene-des-entreprises-et-de-leurs-etablissements-siren-siret/20261001-073325/stock-stockunitelegale-parquet.parquet
-  [zip] Sirene : Fichier StockEtablissement - 01 octobre 2026        2879694907  https://static.data.gouv.fr/resources/base-sirene-des-entreprises-et-de-leurs-etablissements-siren-siret/20261001-072713/stock-stocketablissement-csv.zip
-  [parquet] Sirene : Fichier StockEtablissement - 01 octobre 2026 (forma 2220887978  https://static.data.gouv.fr/resources/base-sirene-des-entreprises-et-de-leurs-etablissements-siren-siret/20261001-073823/stock-stocketablissement-parquet.parquet
-  [zip] Sirene : Fichier StockEtablissementHistorique - 01 octobre 2 1244801219  https://static.data.gouv.fr/resources/base-sirene-des-entreprises-et-de-leurs-etablissements-siren-siret/20261001-073027/stock-stocketablissementhistorique-csv.zip
-  [parquet] Sirene : Fichier StockEtablissementHistorique - 01 octobre 2 877620853  https://static.data.gouv.fr/resources/base-sirene-des-entreprises-et-de-leurs-etablissements-siren-siret/20261001-074108/stock-stocketablissementhistorique-parquet.parquet
-  [zip] Sirene : Fichier StockUniteLegaleHistorique - 01 octobre 202 1265427232  https://static.data.gouv.fr/resources/base-sirene-des-entreprises-et-de-leurs-etablissements-siren-siret/20261001-072342/stock-stockunitelegalehistorique-csv.zip
-  [parquet] Sirene : Fichier StockUniteLegaleHistorique - 01 octobre 202 863403921  https://static.data.gouv.fr/resources/base-sirene-des-entreprises-et-de-leurs-etablissements-siren-siret/20261001-073513/stock-stockunitelegalehistorique-parquet.parquet
-  [zip] Sirene : Fichier StockEtablissementLiensSuccession - 01 octo 120372241  https://static.data.gouv.fr/resources/base-sirene-des-entreprises-et-de-leurs-etablissements-siren-siret/20261001-073218/stock-stocketablissementlienssuccession-csv.zip
-  [parquet] Sirene : Fichier StockEtablissementLiensSuccession - 01 octo 119372997  https://static.data.gouv.fr/resources/base-sirene-des-entreprises-et-de-leurs-etablissements-siren-siret/20261001-074252/stock-stocketablissementlienssuccession-parquet.parquet
-  [zip] Sirene : Fichier StockDoublons - 01 octobre 2026             1098655  https://static.data.gouv.fr/resources/base-sirene-des-entreprises-et-de-leurs-etablissements-siren-siret/20261001-072532/stock-stockdoublons-csv.zip
-  [parquet] Sirene : Fichier StockDoublons - 01 octobre 2026 (format par 1092469  https://static.data.gouv.fr/resources/base-sirene-des-entreprises-et-de-leurs-etablissements-siren-siret/20261001-073650/stock-stockdoublons-parquet.parquet
-  [pdf] Description-fichier-stockdoublons-311.pdf                    110995  https://static.data.gouv.fr/resources/base-sirene-des-entreprises-et-de-leurs-etablissements-siren-siret/20260129-104735/stockdoublons-311-description-fichier-29-01-2026.pdf
-  [csv] Liste-csv-des-variables-du-dessin-du-fichier-stockdoublons-3 220  https://static.data.gouv.fr/resources/base-sirene-des-entreprises-et-de-leurs-etablissements-siren-siret/20240606-111058/stockdoublons-311-dessin-de-fichier.csv
-  [pdf] description-fichier-stocketablissementhistorique-311.pdf     118082  https://static.data.gouv.fr/resources/base-sirene-des-entreprises-et-de-leurs-etablissements-siren-siret/20260129-104815/stocketablissementhistorique-311-description-fichier-29-01-2026.pdf
-  [pdf] description-fichier-stockunitelegalehistorique-311.pdf       120786  https://static.data.gouv.fr/resources/base-sirene-des-entreprises-et-de-leurs-etablissements-siren-siret/20260129-104828/stockunitelegalehistorique-311-description-fichier-29-01-2026.pdf
-  [pdf] description-fichier-stocketablissement-311.pdf               127863  https://static.data.gouv.fr/resources/base-sirene-des-entreprises-et-de-leurs-etablissements-siren-siret/20260129-104840/stocketablissement-311-description-fichier-29-01-2026.pdf
-  [pdf] description-fichier-stockunitelegale-311.pdf                 122938  https://static.data.gouv.fr/resources/base-sirene-des-entreprises-et-de-leurs-etablissements-siren-siret/20260129-104927/stockunitelegale-311-description-fichier-29-01-2026.pdf
-  [pdf] description-fichier-stocketablissementlienssuccession-311.pd 128372  https://static.data.gouv.fr/resources/base-sirene-des-entreprises-et-de-leurs-etablissements-siren-siret/20260129-104940/stocketablissementlienssuccession-311-description-fichier-29-01-2026.pdf
-  [csv] liste-csv-des-variables-du-dessin-du-fichier-stockunitelegal 3165  https://static.data.gouv.fr/resources/base-sirene-des-entreprises-et-de-leurs-etablissements-siren-siret/20260113-143438/stockunitelegale-311-dessin-de-fichier.csv
-  [csv] liste-csv-des-variables-du-dessin-du-fichier-stockunitelegal 2903  https://static.data.gouv.fr/resources/base-sirene-des-entreprises-et-de-leurs-etablissements-siren-siret/20240912-155042/stockunitelegalehistorique-311-dessin-de-fichier.csv
-  [csv] liste-csv-des-variables-du-dessin-du-fichier-stocketablissem 4875  https://static.data.gouv.fr/resources/base-sirene-des-entreprises-et-de-leurs-etablissements-siren-siret/20260113-143513/stocketablissement-311-dessin-de-fichier.csv
-  [csv] liste-csv-des-variables-du-dessin-du-fichier-stocketablissem 1740  https://static.data.gouv.fr/resources/base-sirene-des-entreprises-et-de-leurs-etablissements-siren-siret/20240326-122426/liste-csv-des-variables-du-dessin-du-fichier-stocketablissementhistorique-311.csv
-  [csv] liste-csv-des-variables-du-dessin-du-fichier-stocketablissem 528  https://static.data.gouv.fr/resources/base-sirene-des-entreprises-et-de-leurs-etablissements-siren-siret/20240326-122516/liste-csv-des-variables-du-dessin-du-fichier-stocketablissementlienssuccession-311.csv
+### Échantillon de communes (C/S/L)
+  OK   75056   Paris                  C=0 S=0 L=1
+  ---  69123   Lyon                   absent (HTTP Error 404: Not Found)
+  OK   13055   Marseille              C=0 S=0 L=1
+  OK   31555   Toulouse               C=9965 S=14302 L=9420
+  OK   06088   Nice                   C=11238 S=17645 L=7816
+  OK   33063   Bordeaux               C=8021 S=11160 L=7712
+  OK   59350   Lille                  C=6672 S=6686 L=4566
+  OK   44109   Nantes                 C=5510 S=6821 L=5490
+  OK   67482   Strasbourg             C=6355 S=6812 L=5475
+  OK   42222   Saint-Galmier          C=93 S=127 L=107
+  OK   2A004   Ajaccio                C=2124 S=2227 L=1331
+  OK   97411   Saint-Denis (974)      C=3307 S=3238 L=2299
+  OK   01004   Ambérieu               C=359 S=367 L=215
+  OK   50129   Carentan               C=1249 S=1083 L=778
+  OK   01001   petit village (Abergement) C=7 S=17 L=3
