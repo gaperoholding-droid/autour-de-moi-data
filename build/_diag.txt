@@ -1,18 +1,18 @@
 ### build.json
 {
-  "genere_le": "2026-11-01T18:40:17Z",
+  "genere_le": "2026-11-01T19:05:16Z",
   "perimetre": "ALL",
-  "communes_fichiers": 34169,
+  "communes_fichiers": 34172,
   "total_commerces": 1260870,
   "total_services": 1681297,
   "total_liberaux": 794344,
-  "minutes": 8.4
+  "minutes": 7.6
 }
 
 ### Échantillon de communes (C/S/L)
-  OK   75056   Paris                  C=0 S=0 L=1
-  ---  69123   Lyon                   absent (HTTP Error 404: Not Found)
-  OK   13055   Marseille              C=0 S=0 L=1
+  OK   75056   Paris                  C=94952 S=90834 L=81366
+  OK   69123   Lyon                   C=13916 S=13940 L=12577
+  OK   13055   Marseille              C=20819 S=25182 L=19078
   OK   31555   Toulouse               C=9965 S=14302 L=9420
   OK   06088   Nice                   C=11238 S=17645 L=7816
   OK   33063   Bordeaux               C=8021 S=11160 L=7712
