@@ -4,30 +4,41 @@ UA={"User-Agent":"placette/1.0 (contact@commercesautourdemoi.fr)"}
 def hj(u):
     with urllib.request.urlopen(urllib.request.Request(u,headers=UA),timeout=60) as r:
         return json.loads(r.read().decode("utf-8"))
-communes=None
-for url in ("https://geo.api.gouv.fr/departements/69M/communes?fields=nom,code,population",
-            "https://geo.api.gouv.fr/epcis/200046977/communes?fields=nom,code,population"):
-    try:
-        d=hj(url)
-        if isinstance(d,list) and d: communes=d; print("source:",url); break
-    except Exception as e:
-        print("echec",url,str(e)[:80])
-if not communes:
-    raise SystemExit("pas de communes")
-TARIFS=[(2000,19,205),(5000,29,313),(10000,39,421),(20000,49,529),(50000,69,745),(float('inf'),89,961)]
+TARIFS=[(2000,19),(5000,29),(10000,39),(20000,49),(50000,69),(float('inf'),89)]
 def tier(pop):
-    for mx,m,a in TARIFS:
-        if pop<mx: return m,a
-    return 89,961
-communes.sort(key=lambda c:-(c.get('population') or 0))
-tot_m=tot_a=0; cnt={}
-print("%-30s %9s  %-8s %-8s"%("Commune","Habitants","Mensuel","Annuel"))
-for c in communes:
-    pop=c.get('population') or 0
-    m,a=tier(pop); tot_m+=m; tot_a+=a; cnt[m]=cnt.get(m,0)+1
-    print("%-30s %9d  %4d€/mois %5d€/an"%(c['nom'],pop,m,a))
-print("---")
-print("Nombre de communes :", len(communes))
-print("Répartition par tranche (prix mensuel -> nb communes):", dict(sorted(cnt.items())))
-print("TOTAL MENSUEL : %d €/mois  (soit %d €/an en payant au mois)"%(tot_m,tot_m*12))
-print("TOTAL ANNUEL (formule annuelle -10%%) : %d €/an"%tot_a)
+    for mx,m in TARIFS:
+        if pop<mx: return m
+    return 89
+
+communes=hj("https://geo.api.gouv.fr/epcis/200046977/communes?fields=nom,code,population")
+# scénario A : Lyon = 1 commune
+totA=sum(tier(c.get('population') or 0) for c in communes)
+
+# scénario B : Lyon remplacée par ses 9 arrondissements
+arr=[]
+for i in range(1,10):
+    code="6938%d"%i
+    try:
+        g=hj("https://geo.api.gouv.fr/communes/"+code+"?fields=nom,population")
+        arr.append((g.get('nom'),g.get('population') or 0))
+    except Exception as e:
+        print("arr echec",code,str(e)[:60])
+print("Arrondissements de Lyon :")
+for nom,pop in arr:
+    print("  %-26s %7d -> %d€/mois"%(nom,pop,tier(pop)))
+sum_arr=sum(tier(p) for _,p in arr)
+# retirer Lyon (69123) et ajouter les arrondissements
+lyon=[c for c in communes if c.get('code')=="69123"]
+lyon_m=tier(lyon[0].get('population') or 0) if lyon else 89
+totB=totA - lyon_m + sum_arr
+nbB=len(communes)-1+len(arr)
+
+print("\n=== TOTAUX MENSUELS (prix catalogue) ===")
+print("A) Lyon = 1 commune  (%d entités) : %d €/mois = %d €/an"%(len(communes),totA,totA*12))
+print("B) Lyon = 9 arrond.  (%d entités) : %d €/mois = %d €/an"%(nbB,totB,totB*12))
+print("   (les 9 arrondissements pèsent %d €/mois au lieu de %d €)"%(sum_arr,lyon_m))
+
+print("\n=== TARIFS NÉGOCIÉS (sur le scénario B, %d €/mois catalogue) ==="%totB)
+for remise in (10,15,20,25,30):
+    m=totB*(1-remise/100)
+    print("  -%2d%% : %6.0f €/mois  |  %7.0f €/an"%(remise,m,m*12))
