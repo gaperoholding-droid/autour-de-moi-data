@@ -1,12 +1,12 @@
 ### build.json
 {
-  "genere_le": "2026-11-01T19:05:16Z",
+  "genere_le": "2026-11-02T09:44:08Z",
   "perimetre": "ALL",
   "communes_fichiers": 34172,
   "total_commerces": 1260870,
   "total_services": 1681297,
   "total_liberaux": 794344,
-  "minutes": 7.6
+  "minutes": 9.4
 }
 
 ### Échantillon de communes (C/S/L)
@@ -29,3 +29,8 @@
   OK   01004   Ambérieu               C=359 S=367 L=215
   OK   50129   Carentan               C=1249 S=1083 L=778
   OK   01001   petit village (Abergement) C=7 S=17 L=3
+
+### Saint-Galmier (42222) — noms de la grande distribution (vérif enseignes)
+   Asuper 5                         | Supermarché
+   Petit Casino                     | Supermarché
+   Petit Casino                     | Supermarché
