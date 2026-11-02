@@ -1,0 +1,16 @@
+name: Calcul Métropole de Lyon
+on: { workflow_dispatch: {} }
+permissions: { contents: write }
+jobs:
+  calc:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - run: python3 build/metropole_lyon.py > build/_metropole.txt 2>&1 || true
+      - run: cat build/_metropole.txt
+      - run: |
+          git config user.email contact@naemis.paris
+          git config user.name placette
+          git add build/_metropole.txt
+          git commit -m "calcul metropole lyon" || echo "rien"
+          git push || echo "push ko"
