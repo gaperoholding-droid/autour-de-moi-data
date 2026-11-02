@@ -29,3 +29,13 @@ for code, nom in echants.items():
         print("  OK   %-7s %-22s C=%d S=%d L=%d" % (code, nom, len(d["c"]), len(d["s"]), len(d["l"])))
     except Exception as e:
         print("  ---  %-7s %-22s absent (%s)" % (code, nom, str(e)[:40]))
+
+print("\n### Saint-Galmier (42222) — noms de la grande distribution (vérif enseignes)")
+try:
+    d = json.loads(get("c/42222.json"))
+    cibles = ("Supermarché", "Hypermarché", "Supérette / épicerie", "Magasin multi-commerces")
+    for f in d["c"]:
+        if f["lib"] in cibles:
+            print("   %-32s | %s" % (f["nom"], f["lib"]))
+except Exception as e:
+    print("  échec:", str(e)[:80])

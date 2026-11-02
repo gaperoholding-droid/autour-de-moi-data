@@ -61,10 +61,14 @@ def cv(v):
     v = v.strip()
     return "" if v.upper() in ("[ND]", "[N.D.]", "ND") else v
 
-def nom_etab(ens, usuel, denom, nom, prenom):
-    for v in (ens, usuel, denom):
+def nom_etab(ens1, ens2, ens3, usuel_et, us1, us2, us3, denom_leg, nom, prenom):
+    # On privilégie le nom COMMERCIAL (enseignes + dénominations usuelles)
+    # avant le nom de la société, puis le nom du gérant en dernier recours.
+    for v in (ens1, ens2, ens3, usuel_et, us1, us2, us3):
         v = cv(v)
         if v: return v.title()
+    v = cv(denom_leg)
+    if v: return v.title()
     np = (cv(prenom) + " " + cv(nom)).strip()
     return np.title() if np else "Établissement"
 
@@ -79,12 +83,12 @@ def flush_commune(code, ville, rows):
         siret = r[2]
         if siret in vus: continue
         vus.add(siret)
-        k = naf.classer(r[8])
+        k = naf.classer(r[13])
         if not k: continue
-        groupes[k[0]].append({"nom": nom_etab(r[3], r[4], r[5], r[6], r[7]), "lib": k[1],
-                              "adr": adresse(r[9], r[10], r[11], r[12], r[1]), "cp": r[12] or "",
-                              "lat": (str(r[13]) if r[13] is not None else None),
-                              "lon": (str(r[14]) if r[14] is not None else None),
+        groupes[k[0]].append({"nom": nom_etab(r[3], r[4], r[5], r[6], r[7], r[8], r[9], r[10], r[11], r[12]), "lib": k[1],
+                              "adr": adresse(r[14], r[15], r[16], r[17], r[1]), "cp": r[17] or "",
+                              "lat": (str(r[18]) if r[18] is not None else None),
+                              "lon": (str(r[19]) if r[19] is not None else None),
                               "tel": "", "web": "", "horaires": ""})
     if not any(groupes.values()): return 0, 0, 0
     for g in groupes.values(): g.sort(key=lambda x: x["nom"].lower())
@@ -131,7 +135,9 @@ def main():
     where_dep = "" if DEP.upper() == "ALL" else "AND e.codeCommuneEtablissement LIKE '%s%%'" % DEP
     sql = """
       SELECT e.codeCommuneEtablissement AS code, e.libelleCommuneEtablissement AS ville, e.siret,
-             e.enseigne1Etablissement, e.denominationUsuelleEtablissement,
+             e.enseigne1Etablissement, e.enseigne2Etablissement, e.enseigne3Etablissement,
+             e.denominationUsuelleEtablissement,
+             u.denominationUsuelle1UniteLegale, u.denominationUsuelle2UniteLegale, u.denominationUsuelle3UniteLegale,
              u.denominationUniteLegale, u.nomUniteLegale, u.prenom1UniteLegale,
              e.activitePrincipaleEtablissement AS naf,
              e.numeroVoieEtablissement, e.typeVoieEtablissement, e.libelleVoieEtablissement,
