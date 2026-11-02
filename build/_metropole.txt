@@ -1,0 +1,66 @@
+echec https://geo.api.gouv.fr/departements/69M/communes?fields=nom,code,population HTTP Error 404: Not Found
+source: https://geo.api.gouv.fr/epcis/200046977/communes?fields=nom,code,population
+Commune                        Habitants  Mensuel  Annuel  
+Lyon                              519127    89€/mois   961€/an
+Villeurbanne                      163684    89€/mois   961€/an
+Vénissieux                         65502    89€/mois   961€/an
+Vaulx-en-Velin                     53069    89€/mois   961€/an
+Saint-Priest                       49229    69€/mois   745€/an
+Caluire-et-Cuire                   43597    69€/mois   745€/an
+Bron                               42982    69€/mois   745€/an
+Oullins-Pierre-Bénite              38168    69€/mois   745€/an
+Meyzieu                            36687    69€/mois   745€/an
+Rillieux-la-Pape                   31389    69€/mois   745€/an
+Décines-Charpieu                   29877    69€/mois   745€/an
+Tassin-la-Demi-Lune                23200    69€/mois   745€/an
+Sainte-Foy-lès-Lyon                21692    69€/mois   745€/an
+Givors                             21379    69€/mois   745€/an
+Saint-Genis-Laval                  21212    69€/mois   745€/an
+Saint-Fons                         19285    49€/mois   529€/an
+Écully                             17944    49€/mois   529€/an
+Francheville                       15604    49€/mois   529€/an
+Mions                              13843    49€/mois   529€/an
+Craponne                           12084    49€/mois   529€/an
+Corbas                             11315    49€/mois   529€/an
+Chassieu                           11208    49€/mois   529€/an
+Feyzin                             10304    49€/mois   529€/an
+Grigny-sur-Rhône                   10030    49€/mois   529€/an
+Dardilly                            9221    39€/mois   421€/an
+Irigny                              9034    39€/mois   421€/an
+Neuville-sur-Saône                  7812    39€/mois   421€/an
+Saint-Didier-au-Mont-d'Or           7435    39€/mois   421€/an
+Sathonay-Camp                       7019    39€/mois   421€/an
+Fontaines-sur-Saône                 6957    39€/mois   421€/an
+La Mulatière                        6534    39€/mois   421€/an
+Saint-Cyr-au-Mont-d'Or              6327    39€/mois   421€/an
+Champagne-au-Mont-d'Or              6311    39€/mois   421€/an
+Jonage                              6144    39€/mois   421€/an
+Genay                               5585    39€/mois   421€/an
+Saint-Genis-les-Ollières            5439    39€/mois   421€/an
+Charbonnières-les-Bains             5383    39€/mois   421€/an
+Vernaison                           5210    39€/mois   421€/an
+Charly                              4811    29€/mois   313€/an
+Collonges-au-Mont-d'Or              4669    29€/mois   313€/an
+La Tour-de-Salvagny                 4649    29€/mois   313€/an
+Limonest                            4012    29€/mois   313€/an
+Marcy-l'Étoile                      3778    29€/mois   313€/an
+Quincieux                           3679    29€/mois   313€/an
+Montanay                            3308    29€/mois   313€/an
+Lissieu                             3181    29€/mois   313€/an
+Solaize                             3144    29€/mois   313€/an
+Saint-Germain-au-Mont-d'Or          3124    29€/mois   313€/an
+Fontaines-Saint-Martin              3098    29€/mois   313€/an
+Albigny-sur-Saône                   3057    29€/mois   313€/an
+Cailloux-sur-Fontaines              2989    29€/mois   313€/an
+Couzon-au-Mont-d'Or                 2619    29€/mois   313€/an
+Sathonay-Village                    2412    29€/mois   313€/an
+Fleurieu-sur-Saône                  1597    19€/mois   205€/an
+Rochetaillée-sur-Saône              1551    19€/mois   205€/an
+Poleymieux-au-Mont-d'Or             1412    19€/mois   205€/an
+Saint-Romain-au-Mont-d'Or           1247    19€/mois   205€/an
+Curis-au-Mont-d'Or                  1195    19€/mois   205€/an
+---
+Nombre de communes : 58
+Répartition par tranche (prix mensuel -> nb communes): {19: 5, 29: 15, 39: 14, 49: 9, 69: 11, 89: 4}
+TOTAL MENSUEL : 2632 €/mois  (soit 31584 €/an en payant au mois)
+TOTAL ANNUEL (formule annuelle -10%) : 28414 €/an
