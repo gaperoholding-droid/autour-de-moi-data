@@ -1,0 +1,16 @@
+name: Comptage Métropole
+on: { workflow_dispatch: {} }
+permissions: { contents: write }
+jobs:
+  cnt:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - run: python3 build/metropole_counts.py > build/_metropole_counts.txt 2>&1 || true
+      - run: cat build/_metropole_counts.txt
+      - run: |
+          git config user.email contact@naemis.paris
+          git config user.name placette
+          git add build/_metropole_counts.txt build/metropole_counts.py
+          git commit -m "comptage metropole" || echo rien
+          git push || echo ko
