@@ -1,0 +1,17 @@
+name: Carte Métropole (GeoJSON)
+on: { workflow_dispatch: {} }
+permissions: { contents: write }
+jobs:
+  geo:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - run: pip install shapely
+      - run: python3 build/metropole_geojson.py > build/_metropole_geo_log.txt 2>&1 || true
+      - run: cat build/_metropole_geo_log.txt
+      - run: |
+          git config user.email contact@naemis.paris
+          git config user.name placette
+          git add build/_metropole.geojson build/_metropole_geo_log.txt
+          git commit -m "geojson metropole" || echo "rien"
+          git push || echo "push ko"
