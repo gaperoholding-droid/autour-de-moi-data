@@ -1,0 +1,11 @@
+communes epci (hors Lyon): 57
+  + Lyon 1er Arrondissement
+  + Lyon 2e Arrondissement
+  + Lyon 3e Arrondissement
+  + Lyon 4e Arrondissement
+  + Lyon 5e Arrondissement
+  + Lyon 6e Arrondissement
+  + Lyon 7e Arrondissement
+  + Lyon 8e Arrondissement
+  + Lyon 9e Arrondissement
+FEATURES: 66 | taille: 40 Ko
