@@ -1,0 +1,68 @@
+Commune                       Habitants   €/mois     €/an
+----------------------------------------------------------
+Saint-Étienne                    173136       89      961
+Saint-Chamond                     35646       69      745
+Firminy                           17060       49      529
+Rive-de-Gier                      15242       49      529
+Le Chambon-Feugerolles            12314       49      529
+Andrézieux-Bouthéon               10425       49      529
+Roche-la-Molière                   9843       39      421
+Unieux                             8514       39      421
+Sorbiers                           8116       39      421
+La Ricamarie                       8039       39      421
+Villars                            7664       39      421
+La Talaudière                      7133       39      421
+Saint-Jean-Bonnefonds              6563       39      421
+Saint-Priest-en-Jarez              6471       39      421
+Saint-Genest-Lerpt                 6181       39      421
+Saint-Galmier                      5829       39      421
+Lorette                            4983       29      313
+La Grand-Croix                     4947       29      313
+L'Horme                            4806       29      313
+Saint-Paul-en-Jarez                4699       29      313
+La Fouillouse                      4630       29      313
+Fraisses                           3872       29      313
+Genilac                            3839       29      313
+Saint-Martin-la-Plaine             3764       29      313
+Saint-Héand                        3665       29      313
+L'Étrat                            2879       29      313
+Saint-Joseph                       1996       19      205
+Saint-Christo-en-Jarez             1885       19      205
+Saint-Maurice-en-Gourgois          1827       19      205
+Saint-Bonnet-les-Oules             1821       19      205
+Chambœuf                           1767       19      205
+Cellieu                            1731       19      205
+Châteauneuf                        1724       19      205
+La Tour-en-Jarez                   1495       19      205
+Farnay                             1355       19      205
+Saint-Paul-en-Cornillon            1352       19      205
+Saint-Romain-en-Jarez              1206       19      205
+La Valla-en-Gier                   1140       19      205
+Tartaras                            958       19      205
+Doizieux                            856       19      205
+La Terrasse-sur-Dorlay              778       19      205
+Valfleury                           739       19      205
+Marcenod                            698       19      205
+Fontanès                            690       19      205
+Saint-Nizier-de-Fornas              655       19      205
+Chagnon                             527       19      205
+Dargoire                            524       19      205
+Aboën                               481       19      205
+Sainte-Croix-en-Jarez               480       19      205
+Rozier-Côtes-d'Aurec                437       19      205
+Pavezin                             400       19      205
+Caloire                             330       19      205
+La Gimond                           279       19      205
+----------------------------------------------------------
+NB COMMUNES : 53
+
+Repartition par palier :
+  Moins de 2 000     : 27 communes x  19€/mois =   513 €/mois
+  2 000 a 5 000      : 10 communes x  29€/mois =   290 €/mois
+  5 000 a 10 000     : 10 communes x  39€/mois =   390 €/mois
+  10 000 a 20 000    :  4 communes x  49€/mois =   196 €/mois
+  20 000 a 50 000    :  1 communes x  69€/mois =    69 €/mois
+  Plus de 50 000     :  1 communes x  89€/mois =    89 €/mois
+
+TOTAL MENSUEL  :   1547 €/mois
+TOTAL ANNUEL   :  16697 €/an (si paiement mensuel : 18564 €/an)
